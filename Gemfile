@@ -9,6 +9,8 @@ gem 'mysql2', '>= 0.3.13', '< 0.5'
 gem 'sass-rails', '~> 5.0'
 # Bootstrap
 gem 'bootstrap-sass', '~> 3.3.6'
+# Font awesome
+gem "font-awesome-rails"
 #Use Simple form
 gem 'simple_form'
 # Use Bootstrap watch

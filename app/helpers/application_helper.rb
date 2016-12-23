@@ -10,7 +10,7 @@ module ApplicationHelper
           concat content_tag(:span, '&times;'.html_safe, 'aria-hidden' => true)
           concat content_tag(:span, 'Close', class: 'sr-only')
         end)
-        concat content_tag(:div, message, class: "container")
+        concat content_tag(:i, message, class: "fa fa-info-circle", 'aria-hidden' => "true")
       end)
     end
     nil

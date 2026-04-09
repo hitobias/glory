@@ -1,0 +1,54 @@
+FROM wordpress:6.7-php8.2-apache
+
+# Install WP-CLI
+RUN curl -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+    && chmod +x /usr/local/bin/wp
+
+# PHP configuration — production
+RUN { \
+    echo 'memory_limit = 256M'; \
+    echo 'upload_max_filesize = 64M'; \
+    echo 'post_max_size = 64M'; \
+    echo 'max_execution_time = 300'; \
+    echo 'max_input_vars = 3000'; \
+    echo 'date.timezone = Asia/Taipei'; \
+    echo 'display_errors = Off'; \
+    echo 'log_errors = On'; \
+    echo 'error_log = /var/log/php_errors.log'; \
+} > /usr/local/etc/php/conf.d/glory-custom.ini
+
+# Install additional PHP extensions
+RUN apt-get update && apt-get install -y \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev \
+    libwebp-dev \
+    libzip-dev \
+    unzip \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+    && docker-php-ext-install -j$(nproc) gd zip opcache \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# OPcache — production settings
+RUN { \
+    echo 'opcache.memory_consumption=128'; \
+    echo 'opcache.interned_strings_buffer=8'; \
+    echo 'opcache.max_accelerated_files=10000'; \
+    echo 'opcache.revalidate_freq=60'; \
+    echo 'opcache.fast_shutdown=1'; \
+    echo 'opcache.enable_cli=0'; \
+    echo 'opcache.validate_timestamps=1'; \
+} > /usr/local/etc/php/conf.d/opcache-recommended.ini
+
+# Enable Apache modules
+RUN a2enmod rewrite headers expires
+
+# Security headers
+RUN { \
+    echo '<IfModule mod_headers.c>'; \
+    echo '  Header always set X-Content-Type-Options "nosniff"'; \
+    echo '  Header always set X-Frame-Options "SAMEORIGIN"'; \
+    echo '  Header always set Referrer-Policy "strict-origin-when-cross-origin"'; \
+    echo '</IfModule>'; \
+} > /etc/apache2/conf-available/security-headers.conf \
+    && a2enconf security-headers

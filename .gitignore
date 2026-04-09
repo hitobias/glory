@@ -30,4 +30,10 @@ data/migration/*.wpress
 data/migration/*.sql
 data/migration/*.xml
 
+# Export data (local → production migration)
+data/export/
+
+# Production env (contains real secrets)
+.env.production
+
 # Docker volumes (data is in named volumes)

@@ -90,13 +90,21 @@ for i in $(seq 1 60); do
 done
 
 # ─── Ensure GeneratePress parent theme exists in volume ───────────
-GP_SRC="/usr/src/wordpress/wp-content/themes/generatepress"
-GP_DST="/var/www/html/wp-content/themes/generatepress"
-if [ -d "$GP_SRC" ] && [ ! -d "$GP_DST" ]; then
-    log "Installing GeneratePress parent theme into volume..."
-    cp -r "$GP_SRC" "$GP_DST"
-    chown -R www-data:www-data "$GP_DST"
-    log "  GeneratePress installed."
+GP_DIR="/var/www/html/wp-content/themes/generatepress"
+if [ ! -f "$GP_DIR/style.css" ]; then
+    log "GeneratePress not found — downloading from WordPress.org..."
+    curl -fSL -o /tmp/generatepress.zip \
+        https://downloads.wordpress.org/theme/generatepress.latest-stable.zip 2>/dev/null
+    if [ -f /tmp/generatepress.zip ]; then
+        unzip -qo /tmp/generatepress.zip -d /var/www/html/wp-content/themes/
+        chown -R www-data:www-data "$GP_DIR"
+        rm -f /tmp/generatepress.zip
+        log "  GeneratePress installed."
+    else
+        log "  ERROR: Failed to download GeneratePress!"
+    fi
+else
+    log "GeneratePress parent theme present — OK."
 fi
 
 if [ -f /var/www/html/wp-config.php ]; then

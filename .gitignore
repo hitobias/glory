@@ -1,0 +1,33 @@
+# Environment
+.env
+
+# WordPress uploads (managed separately)
+wp-content/uploads/
+
+# Node
+node_modules/
+wp-content/themes/glory-theme/node_modules/
+
+# Build output
+wp-content/themes/glory-theme/dist/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+docker/mysql/slow.log
+
+# Migration data (large binary files)
+data/migration/*.wpress
+data/migration/*.sql
+data/migration/*.xml
+
+# Docker volumes (data is in named volumes)

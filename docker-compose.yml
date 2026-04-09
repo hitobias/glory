@@ -1,0 +1,90 @@
+services:
+  wordpress:
+    build:
+      context: ./docker/wordpress
+      dockerfile: Dockerfile
+    container_name: glory-wp
+    restart: unless-stopped
+    ports:
+      - "${WP_PORT:-8080}:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_TABLE_PREFIX: ${WP_TABLE_PREFIX:-glry_}
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_DEBUG', true);
+        define('WP_DEBUG_LOG', true);
+        define('WP_DEBUG_DISPLAY', false);
+        define('SCRIPT_DEBUG', true);
+        define('DISALLOW_FILE_EDIT', true);
+        define('WP_MEMORY_LIMIT', '256M');
+        define('WP_MAX_MEMORY_LIMIT', '512M');
+    volumes:
+      - wordpress_data:/var/www/html
+      - ./wp-content/themes/glory-theme:/var/www/html/wp-content/themes/glory-theme
+      - uploads_data:/var/www/html/wp-content/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - glory-net
+
+  db:
+    image: mysql:8.0
+    container_name: glory-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/custom.cnf:ro
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - glory-net
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: glory-pma
+    restart: unless-stopped
+    ports:
+      - "${PMA_PORT:-8081}:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: ${MYSQL_USER}
+      PMA_PASSWORD: ${MYSQL_PASSWORD}
+      UPLOAD_LIMIT: 64M
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - glory-net
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: glory-mail
+    restart: unless-stopped
+    ports:
+      - "${MAILHOG_SMTP_PORT:-1025}:1025"
+      - "${MAILHOG_UI_PORT:-8025}:8025"
+    networks:
+      - glory-net
+
+volumes:
+  wordpress_data:
+  db_data:
+  uploads_data:
+
+networks:
+  glory-net:
+    driver: bridge

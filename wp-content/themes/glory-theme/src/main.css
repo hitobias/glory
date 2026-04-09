@@ -1,0 +1,1195 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   Base Styles - 得榮社會福利基金會
+   ========================================================================== */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  body {
+    @apply font-sans text-body text-dark antialiased;
+    background-color: #ffffff !important;
+    overflow-x: hidden;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+  }
+
+  /* Override GP CSS custom properties */
+  :root {
+    --base-2: #ffffff !important;
+    --base-3: transparent !important;
+  }
+
+  h1 { @apply text-h1 text-dark; }
+  h2 { @apply text-h2 text-dark; }
+  h3 { @apply text-h3 text-dark; }
+  h4 { @apply text-h4 text-dark; }
+
+  a {
+    @apply text-primary-500 transition-colors duration-200 hover:text-primary-700;
+  }
+
+  img {
+    @apply max-w-full h-auto;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-primary-500 outline-offset-2;
+  }
+}
+
+/* ==========================================================================
+   Component Classes
+   ========================================================================== */
+
+@layer components {
+  /* ---------- Buttons ---------- */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2
+           px-6 py-3 rounded-lg font-semibold text-body-sm
+           no-underline cursor-pointer
+           transition-all duration-200
+           focus-visible:outline-2 focus-visible:outline-offset-2;
+  }
+
+  .btn-primary {
+    @apply btn text-white
+           hover:shadow-md hover:-translate-y-0.5
+           active:translate-y-0
+           focus-visible:outline-accent-green;
+    background: linear-gradient(135deg, #195630 0%, #192a3d 100%);
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #1e6b3a 0%, #1e3550 100%);
+  }
+
+  .btn-accent {
+    @apply btn bg-accent text-dark
+           hover:bg-accent-400 hover:shadow-md hover:-translate-y-0.5
+           active:translate-y-0
+           focus-visible:outline-accent;
+  }
+
+  .btn-outline {
+    @apply btn border-2 border-accent-green text-accent-green bg-transparent
+           hover:text-white hover:-translate-y-0.5
+           active:translate-y-0
+           focus-visible:outline-accent-green;
+  }
+
+  .btn-outline:hover {
+    background: linear-gradient(135deg, #195630 0%, #192a3d 100%);
+    border-color: #195630;
+  }
+
+  .btn-white {
+    @apply btn bg-white text-dark
+           hover:bg-gray-50 hover:shadow-md hover:-translate-y-0.5
+           active:translate-y-0
+           focus-visible:outline-white;
+  }
+
+  .btn-outline-white {
+    @apply btn border-2 border-white text-white bg-transparent
+           hover:bg-white hover:text-dark
+           focus-visible:outline-white;
+  }
+
+  .btn-sm {
+    @apply px-4 py-2.5 text-body-sm;
+  }
+
+  .btn-lg {
+    @apply px-8 py-4 text-body;
+  }
+
+  /* ---------- Cards ---------- */
+  .card {
+    @apply bg-white rounded-card border border-gray-100 shadow-card overflow-hidden
+           transition-all duration-300
+           hover:shadow-card-hover hover:-translate-y-0.5;
+  }
+
+  .card-body {
+    @apply p-5 md:p-6;
+  }
+
+  /* ---------- Layout ---------- */
+  .section {
+    @apply py-section-sm md:py-section;
+  }
+
+  .section-sm {
+    @apply py-section-xs md:py-section-sm;
+  }
+
+  .container-content {
+    @apply max-w-content mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* ---------- Section Header ---------- */
+  .section-header {
+    @apply text-center mb-8 md:mb-12;
+  }
+
+  .section-header h2 {
+    @apply text-h3 md:text-h2 text-dark mb-3;
+  }
+
+  .section-header p {
+    @apply text-body md:text-body-lg text-dark-400 max-w-xl mx-auto;
+  }
+
+  .section-header-bar {
+    @apply block w-16 h-1 bg-accent mx-auto mt-4 rounded-full;
+  }
+
+  /* ---------- Badges ---------- */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-1 rounded-full
+           text-xs font-semibold;
+  }
+
+  .badge-primary {
+    @apply badge bg-primary-50 text-primary-700;
+  }
+
+  .badge-accent {
+    @apply badge bg-accent-100 text-accent-800;
+  }
+
+  .badge-green {
+    @apply badge bg-accent-green-100 text-accent-green;
+  }
+}
+
+/* ==========================================================================
+   Top Bar
+   ========================================================================== */
+
+.header-topbar {
+  @apply text-white;
+  background: transparent;
+  transition: background 0.4s;
+}
+
+.header-wrap.header-scrolled .header-topbar {
+  background: linear-gradient(135deg, #192a3d 0%, #1e3550 100%);
+}
+
+.topbar-link {
+  @apply flex items-center gap-1.5 text-white/80 hover:text-accent
+         no-underline transition-all duration-200;
+  letter-spacing: 0.03em;
+}
+
+.topbar-info {
+  @apply flex items-center gap-1.5 text-white/55;
+  letter-spacing: 0.03em;
+}
+
+.topbar-sep {
+  @apply w-px h-3 bg-white/15;
+}
+
+.topbar-social {
+  @apply flex items-center justify-center w-7 h-7 rounded-full
+         text-white/55 hover:text-white hover:bg-white/10
+         no-underline transition-all duration-200;
+}
+
+.topbar-social:hover {
+  transform: scale(1.12);
+}
+
+/* ==========================================================================
+   Header — premium feel with accent bar + glassmorphism
+   ========================================================================== */
+
+/* Header wrapper — fixed, transparent by default */
+.header-wrap {
+  @apply fixed top-0 left-0 right-0 z-50;
+  width: 100%;
+  border-top: none;
+  transition: background-color 0.4s, box-shadow 0.4s, backdrop-filter 0.4s, border-top 0.4s;
+}
+
+.header-wrap.header-scrolled {
+  background: rgba(25, 86, 48, 0.85);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.12);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+
+/* Override GeneratePress parent theme defaults */
+.site-header,
+header.site-header {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.main-navigation,
+.main-navigation ul ul {
+  background-color: transparent !important;
+}
+
+/* Hide GeneratePress parent top bar completely */
+.top-bar {
+  display: none !important;
+}
+
+/* Override GP separate-containers layout — remove gaps/margins */
+.separate-containers .inside-article,
+.separate-containers .comments-area,
+.separate-containers .page-header,
+.separate-containers .paging-navigation {
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.site-content {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+#page,
+.site,
+.site-content .content-area {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: hidden;
+  border: none !important;
+}
+
+/* GP container — kill all side gaps */
+.generate-columns-container,
+.grid-container,
+.inside-article,
+.entry-content,
+.page-content {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  max-width: 100% !important;
+}
+
+/* Flush site-main spacing */
+.site-main {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Offset for fixed header — hero (first section) gets extra top padding
+   so content sits below the transparent navbar.
+   Header: h-14 (3.5rem) mobile, lg:h-20 (5rem) desktop. */
+.site-main > section:first-child {
+  padding-top: 7rem !important;   /* 3.5rem header + 3.5rem visible */
+}
+
+@media (min-width: 1024px) {
+  .site-main > section:first-child {
+    padding-top: 9rem !important;  /* 5rem header + 4rem visible */
+  }
+}
+
+.site-main > section {
+  margin: 0 !important;
+}
+
+/* one-container: GP can add a white .container bg between sections */
+.one-container .container,
+.one-container .inside-article {
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+/* Force full-width: override GP sidebar layout */
+.site-content .content-area {
+  width: 100% !important;
+  float: none !important;
+}
+
+.is-right-sidebar,
+.is-left-sidebar,
+.sidebar,
+.widget-area {
+  display: none !important;
+  width: 0 !important;
+}
+
+/* Friendly links — horizontal card with accent bar */
+.flink {
+  @apply relative flex items-center gap-4 bg-white rounded-2xl
+         no-underline overflow-hidden transition-all duration-300;
+  padding: 1.25rem 1.25rem 1.25rem 1.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.flink:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.flink-accent {
+  @apply absolute left-0 top-0 bottom-0 w-1 rounded-r-full;
+  opacity: 0.7;
+  transition: width 0.3s, opacity 0.3s;
+}
+
+.flink:hover .flink-accent {
+  width: 0.3rem;
+  opacity: 1;
+}
+
+.flink-icon {
+  @apply flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center
+         transition-transform duration-300;
+}
+
+.flink:hover .flink-icon {
+  transform: scale(1.1);
+}
+
+.flink-body {
+  @apply flex flex-col min-w-0;
+}
+
+.flink-org {
+  @apply text-[0.65rem] font-semibold uppercase tracking-widest text-dark-300 mb-0.5;
+}
+
+.flink-name {
+  @apply text-sm font-semibold text-dark leading-snug mb-1 transition-colors duration-300;
+}
+
+.flink:hover .flink-name {
+  color: var(--flink-color, #195630);
+}
+
+.flink-url {
+  @apply text-xs text-dark-300 transition-colors duration-300;
+}
+
+.flink:hover .flink-url {
+  color: var(--flink-color, #195630);
+}
+
+/* Footer social icons — platform brand colors */
+.footer-social {
+  @apply w-9 h-9 rounded-full flex items-center justify-center
+         no-underline transition-all duration-300;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.footer-social:hover {
+  transform: scale(1.12);
+}
+
+.footer-social--fb {
+  color: #1877F2;
+}
+
+.footer-social--fb:hover {
+  background: #1877F2;
+  color: white;
+}
+
+.footer-social--yt {
+  color: #FF0000;
+}
+
+.footer-social--yt:hover {
+  background: #FF0000;
+  color: white;
+}
+
+.footer-social--ig {
+  color: #E4405F;
+}
+
+.footer-social--ig:hover {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color: white;
+}
+
+/* GP footer/site-info overrides */
+.site-info,
+.footer-widgets {
+  background: transparent !important;
+}
+
+/* GP back-to-top button */
+a.generate-back-to-top {
+  display: none !important;
+}
+
+.main-navigation .main-nav ul li a {
+  color: inherit !important;
+}
+
+/* Logo — bright on transparent hero, normal on scroll */
+.header-logo {
+  @apply flex items-center no-underline flex-shrink-0;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.header-logo img {
+  transition: filter 0.4s;
+  filter: brightness(0) invert(1);
+}
+
+.header-logo:hover {
+  transform: scale(1.04);
+}
+
+/* ==========================================================================
+   Desktop Navigation — expanding underline, refined typography
+   ========================================================================== */
+
+.glory-nav {
+  @apply flex items-center list-none m-0 p-0 gap-1;
+}
+
+.glory-nav li {
+  @apply relative;
+}
+
+/* Top-level links — white when transparent, dark when scrolled */
+.glory-nav > li > a {
+  @apply relative block px-3.5 py-2 text-base font-medium
+         no-underline transition-all duration-300;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.04em;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.header-wrap.header-scrolled .glory-nav > li > a {
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* Expanding underline indicator from center */
+.glory-nav > li > a::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: white;
+  border-radius: 1px;
+  transform: translateX(-50%);
+  transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.3s;
+}
+
+.header-wrap.header-scrolled .glory-nav > li > a::after {
+  background: white;
+}
+
+.glory-nav > li > a:hover {
+  color: white;
+}
+
+.header-wrap.header-scrolled .glory-nav > li > a:hover {
+  color: white;
+}
+
+.glory-nav > li > a:hover::after {
+  width: 60%;
+}
+
+/* Active / ancestor — persistent underline + bold */
+.glory-nav > li.current-menu-item > a,
+.glory-nav > li.current-menu-ancestor > a {
+  color: white;
+  font-weight: 600;
+}
+
+.header-wrap.header-scrolled .glory-nav > li.current-menu-item > a,
+.header-wrap.header-scrolled .glory-nav > li.current-menu-ancestor > a {
+  color: white;
+}
+
+.glory-nav > li.current-menu-item > a::after,
+.glory-nav > li.current-menu-ancestor > a::after {
+  width: 70%;
+}
+
+/* Has-children chevron */
+.glory-nav > li.menu-item-has-children > a {
+  @apply pr-6;
+}
+
+/* Override ::after for has-children — chevron uses a separate pseudo */
+.glory-nav > li.menu-item-has-children > a::after {
+  /* Keep the underline behaviour */
+}
+
+.glory-nav > li.menu-item-has-children > a::before {
+  content: '';
+  @apply absolute right-1.5 top-1/2
+         w-0 h-0 border-l-[3.5px] border-r-[3.5px] border-t-[4.5px]
+         border-l-transparent border-r-transparent
+         transition-all duration-200;
+  border-top-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-50%);
+}
+
+.header-wrap.header-scrolled .glory-nav > li.menu-item-has-children > a::before {
+  border-top-color: rgba(255, 255, 255, 0.6);
+}
+
+.glory-nav > li.menu-item-has-children:hover > a::before {
+  border-top-color: white;
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.header-wrap.header-scrolled .glory-nav > li.menu-item-has-children:hover > a::before {
+  border-top-color: white;
+}
+
+/* Dropdown submenu — anchor border + premium shadow */
+.glory-nav .sub-menu {
+  @apply absolute top-full left-1/2 min-w-[210px]
+         bg-white rounded-xl list-none m-0 py-2 px-1.5
+         opacity-0 invisible;
+  transform: translateX(-50%) translateY(10px);
+  border-top: 2.5px solid #195630;
+  box-shadow: 0 12px 40px -8px rgba(25, 42, 61, 0.14),
+              0 4px 12px -4px rgba(25, 42, 61, 0.05);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.97);
+  transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), visibility 0.25s;
+  z-index: 100;
+}
+
+.glory-nav li:hover > .sub-menu {
+  @apply opacity-100 visible;
+  transform: translateX(-50%) translateY(2px);
+}
+
+/* Dropdown bridge — prevents gap hover loss */
+.glory-nav > li.menu-item-has-children > .sub-menu::before {
+  content: '';
+  position: absolute;
+  top: -14px;
+  left: 0;
+  right: 0;
+  height: 14px;
+}
+
+/* Dropdown items — left bar on hover */
+.glory-nav .sub-menu li a {
+  @apply relative block pl-4 pr-4 py-2.5 rounded-lg text-[0.85rem]
+         text-dark-600 font-normal no-underline whitespace-nowrap
+         transition-all duration-150;
+  letter-spacing: 0.02em;
+}
+
+/* Left accent bar — scales in from center */
+.glory-nav .sub-menu li a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 25%;
+  bottom: 25%;
+  width: 3px;
+  border-radius: 2px;
+  background: #195630;
+  transform: scaleY(0);
+  transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.glory-nav .sub-menu li a:hover {
+  color: #195630;
+  @apply bg-accent-green-100/50;
+  padding-left: 1.125rem;
+}
+
+.glory-nav .sub-menu li a:hover::before {
+  transform: scaleY(1);
+}
+
+/* Active sub-item accent */
+.glory-nav .sub-menu li.current-menu-item > a {
+  color: #195630;
+  @apply bg-accent-green-100/60 font-medium;
+  padding-left: 1.125rem;
+}
+
+.glory-nav .sub-menu li.current-menu-item > a::before {
+  transform: scaleY(1);
+}
+
+/* ==========================================================================
+   Donate Buttons
+   ========================================================================== */
+
+.nav-donate-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 1.375rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  background: linear-gradient(135deg, #fcc800 0%, #fcd419 100%);
+  color: #192a3d;
+  box-shadow: 0 2px 8px rgba(252, 200, 0, 0.25);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow: hidden;
+}
+
+/* White shimmer overlay on hover */
+.nav-donate-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%);
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity 0.3s, transform 0.6s ease;
+}
+
+.nav-donate-btn:hover {
+  box-shadow: 0 4px 20px rgba(252, 200, 0, 0.4);
+  transform: translateY(-1px);
+  color: #192a3d;
+}
+
+.nav-donate-btn:hover::after {
+  opacity: 1;
+  transform: translateX(100%);
+}
+
+/* ==========================================================================
+   Animated Hamburger
+   ========================================================================== */
+
+.hamburger {
+  @apply flex items-center justify-center w-10 h-10 rounded-lg
+         hover:bg-gray-100/60 transition-all duration-200 cursor-pointer
+         bg-transparent border-none p-0;
+}
+
+.hamburger:active {
+  transform: scale(0.92);
+}
+
+.hamburger-box {
+  @apply relative w-[22px] h-[16px];
+}
+
+.hamburger-line {
+  @apply absolute left-0 w-full h-[2px] rounded-full
+         transition-all duration-300 ease-in-out;
+  background: white;
+}
+
+.header-wrap.header-scrolled .hamburger-line {
+  background: white;
+}
+
+/* Drawer close button — always dark lines */
+.drawer-panel .hamburger-line {
+  @apply bg-dark;
+}
+
+.hamburger-line--top { top: 0; }
+.hamburger-line--mid { top: 50%; transform: translateY(-50%); }
+.hamburger-line--bot { bottom: 0; }
+
+/* Hamburger → X */
+.hamburger.is-active .hamburger-line--top {
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.hamburger.is-active .hamburger-line--mid {
+  opacity: 0;
+  transform: translateY(-50%) scaleX(0);
+}
+
+.hamburger.is-active .hamburger-line--bot {
+  bottom: 50%;
+  transform: translateY(50%) rotate(-45deg);
+}
+
+/* ==========================================================================
+   Mobile Drawer
+   ========================================================================== */
+
+.drawer-overlay {
+  @apply fixed inset-0 opacity-0 pointer-events-none
+         transition-opacity duration-300;
+  z-index: 60;
+  background: rgba(25, 42, 61, 0.45);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+.drawer-overlay.active {
+  @apply opacity-100 pointer-events-auto;
+}
+
+.drawer-panel {
+  @apply fixed top-0 right-0 bottom-0 bg-white
+         transform translate-x-full
+         overflow-hidden;
+  z-index: 70;
+  width: 100%;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 640px) {
+  .drawer-panel {
+    max-width: 380px;
+  }
+}
+
+.drawer-panel.active {
+  @apply translate-x-0;
+}
+
+.drawer-header {
+  @apply flex items-center justify-between px-5 h-14;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.drawer-body {
+  @apply px-5 py-5 overflow-y-auto overscroll-contain;
+  max-height: calc(100vh - 3.5rem);
+  max-height: calc(100dvh - 3.5rem);
+}
+
+/* ==========================================================================
+   Mobile Navigation — Accordion
+   ========================================================================== */
+
+.mobile-nav {
+  @apply list-none m-0 p-0 flex flex-col gap-0.5;
+}
+
+/* Top-level items */
+.mobile-nav > li {
+  @apply border-b border-gray-100/70;
+}
+
+.mobile-nav > li:last-child {
+  @apply border-b-0;
+}
+
+.mobile-nav > li > a {
+  @apply flex items-center px-3 py-3.5 text-[0.95rem] font-medium text-dark
+         no-underline rounded-lg transition-colors duration-150;
+}
+
+.mobile-nav > li > a:hover,
+.mobile-nav > li > a:active {
+  @apply bg-primary-50/60 text-primary-600;
+}
+
+/* Current page */
+.mobile-nav > li.current-menu-item > a,
+.mobile-nav > li.current-menu-ancestor > a {
+  @apply text-primary-600 font-semibold;
+}
+
+.mobile-nav > li.current-menu-item > a::before,
+.mobile-nav > li.current-menu-ancestor > a::before {
+  content: '';
+  @apply w-[3px] h-5 bg-primary-500 rounded-full mr-2.5 flex-shrink-0;
+}
+
+/* Has-children: accordion toggle wrapper */
+.mobile-nav > li.menu-item-has-children {
+  @apply relative;
+}
+
+.mobile-nav > li.menu-item-has-children > a {
+  @apply pr-12; /* room for the toggle */
+}
+
+/* Accordion toggle button — injected by JS */
+.mobile-submenu-toggle {
+  @apply absolute right-1 top-1 w-10 h-10 flex items-center justify-center
+         rounded-lg cursor-pointer transition-all duration-200
+         bg-transparent border-none p-0;
+}
+
+.mobile-submenu-toggle:hover {
+  @apply bg-gray-100;
+}
+
+.mobile-submenu-toggle svg {
+  @apply w-4 h-4 text-dark-400 transition-transform duration-300;
+}
+
+.mobile-submenu-toggle.is-open svg {
+  transform: rotate(180deg);
+}
+
+/* Sub-menu: collapsed by default */
+.mobile-nav .sub-menu {
+  @apply list-none m-0 p-0 overflow-hidden;
+  max-height: 0;
+  transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.25s ease;
+  opacity: 0;
+}
+
+.mobile-nav .sub-menu.is-open {
+  opacity: 1;
+}
+
+.mobile-nav .sub-menu li a {
+  @apply block pl-8 pr-3 py-2.5 text-[0.875rem] text-dark-500 font-normal
+         no-underline rounded-lg transition-colors duration-150;
+}
+
+.mobile-nav .sub-menu li a:hover,
+.mobile-nav .sub-menu li a:active {
+  @apply text-primary-500 bg-primary-50/50;
+}
+
+.mobile-nav .sub-menu li.current-menu-item > a {
+  @apply text-primary-600 font-medium bg-primary-50/60;
+}
+
+/* ==========================================================================
+   Drawer Donate & Contact
+   ========================================================================== */
+
+.drawer-donate-btn {
+  @apply mt-5 flex items-center justify-center gap-2 w-full py-3.5
+         text-body font-bold rounded-xl no-underline
+         transition-all duration-300;
+  background: linear-gradient(135deg, #fcc800 0%, #fcd419 100%);
+  color: #192a3d;
+  box-shadow: 0 2px 12px rgba(252, 200, 0, 0.25);
+}
+
+.drawer-donate-btn:hover {
+  box-shadow: 0 4px 20px rgba(252, 200, 0, 0.4);
+  color: #192a3d;
+}
+
+.drawer-contact {
+  @apply mt-5 pt-4 border-t border-gray-100/80 space-y-2.5;
+}
+
+.drawer-contact-item {
+  @apply flex items-center gap-2.5 text-dark-400 text-body-sm
+         no-underline transition-colors duration-150;
+}
+
+a.drawer-contact-item:hover {
+  @apply text-primary-500;
+}
+
+/* ==========================================================================
+   Hero Video Section
+   ========================================================================== */
+
+.hero-video-section {
+  @apply relative bg-dark overflow-hidden flex items-center;
+  min-height: 60vh;
+}
+
+@media (min-width: 768px) {
+  .hero-video-section { min-height: 70vh; }
+}
+
+@media (min-width: 1024px) {
+  .hero-video-section { min-height: 80vh; }
+}
+
+.hero-video-wrap {
+  @apply absolute inset-0 z-0 overflow-hidden pointer-events-none;
+}
+
+.hero-video-iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* Always cover: whichever is larger — viewport-based or 100% of parent */
+  width: 100vw;
+  height: 56.25vw;   /* 16:9 = 100vw * 9/16 */
+  min-height: 100%;
+  min-width: 177.78vh; /* 16:9 inverse = 100vh * 16/9 */
+}
+
+/* ==========================================================================
+   Scroll Animations
+   ========================================================================== */
+
+[data-animate] {
+  opacity: 0;
+  transform: translateY(1.5rem);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+[data-animate].animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-animate="fade-up"] {
+  transform: translateY(2rem);
+}
+
+[data-animate="fade-in"] {
+  transform: none;
+}
+
+[data-animate="scale"] {
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+[data-animate="scale"].animate-in {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Stagger children animation */
+[data-stagger] > * {
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+[data-stagger].animate-in > *:nth-child(1) { transition-delay: 0ms; }
+[data-stagger].animate-in > *:nth-child(2) { transition-delay: 100ms; }
+[data-stagger].animate-in > *:nth-child(3) { transition-delay: 200ms; }
+[data-stagger].animate-in > *:nth-child(4) { transition-delay: 300ms; }
+
+[data-stagger].animate-in > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   Mobile Sticky CTA
+   ========================================================================== */
+
+.mobile-sticky-cta {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ==========================================================================
+   WordPress Specific
+   ========================================================================== */
+
+.alignwide {
+  @apply max-w-[1400px] mx-auto;
+}
+
+.alignfull {
+  @apply w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw];
+}
+
+.wp-block-image img {
+  @apply rounded-card;
+}
+
+.wp-block-quote {
+  @apply border-l-4 border-primary-500 pl-6 italic text-dark-400;
+}
+
+.screen-reader-text {
+  @apply sr-only;
+}
+
+/* ==========================================================================
+   Prose (article/page content)
+   ========================================================================== */
+
+.prose {
+  @apply text-dark-600 leading-relaxed;
+}
+
+.prose h2 {
+  @apply text-h3 text-dark mt-10 mb-4;
+}
+
+.prose h3 {
+  @apply text-h4 text-dark mt-8 mb-3;
+}
+
+.prose p {
+  @apply mb-5;
+}
+
+.prose a {
+  @apply text-primary-500 underline decoration-primary-200
+         hover:decoration-primary-500 transition-colors;
+}
+
+.prose img {
+  @apply rounded-card my-6 mx-auto;
+}
+
+.prose ul, .prose ol {
+  @apply mb-5 pl-6;
+}
+
+.prose li {
+  @apply mb-2;
+}
+
+.prose table {
+  @apply w-full border-collapse my-6 text-body-sm;
+}
+
+.prose th {
+  @apply bg-gray-50 border border-gray-200 px-4 py-2.5 text-left font-semibold text-dark;
+}
+
+.prose td {
+  @apply border border-gray-200 px-4 py-2.5;
+}
+
+.prose iframe, .prose video {
+  @apply w-full rounded-card my-6;
+  aspect-ratio: 16/9;
+}
+
+.prose figure {
+  @apply my-6;
+}
+
+.prose figcaption {
+  @apply text-center text-body-sm text-dark-400 mt-2;
+}
+
+/* Qubely/Elementor/VC block fallback styles */
+.qubely-section,
+.qubely-row,
+.qubely-column,
+.qubely-block-wrapper,
+.qubely-block-text,
+.qubely-block-text-title-container,
+.qubely-block-text-title-inner {
+  @apply block;
+}
+
+.qubely-block-btn-wrapper {
+  @apply inline-block my-4;
+}
+
+.qubely-block-btn-anchor {
+  @apply inline-flex items-center px-6 py-3 text-white rounded-lg
+         font-semibold no-underline transition-colors;
+  background: linear-gradient(135deg, #195630 0%, #192a3d 100%);
+}
+
+.qubely-block-btn-anchor:hover {
+  background: linear-gradient(135deg, #1e6b3a 0%, #1e3550 100%);
+}
+
+.qubely-block-image-comparison {
+  @apply block overflow-hidden rounded-lg;
+}
+
+.qubely-block-image-comparison img {
+  @apply max-w-full h-auto;
+}
+
+/* Visual Composer (vc_row) fallback */
+.vc_row,
+.vc_column_container,
+.vc_column-inner,
+.wpb_wrapper {
+  @apply block;
+}
+
+.vc_row {
+  @apply flex flex-wrap gap-4 my-4;
+}
+
+.vc_col-sm-6 { @apply w-full md:w-[calc(50%-0.5rem)]; }
+.vc_col-sm-4 { @apply w-full md:w-[calc(33.333%-0.67rem)]; }
+.vc_col-sm-3 { @apply w-full md:w-[calc(25%-0.75rem)]; }
+.vc_col-sm-12 { @apply w-full; }
+
+/* Elementor fallback */
+.elementor-widget-container {
+  @apply block;
+}
+
+.elementor-heading-title {
+  @apply text-h3 text-dark font-bold;
+}
+
+/* ==========================================================================
+   Pagination
+   ========================================================================== */
+
+.nav-links {
+  @apply flex items-center gap-1 flex-wrap justify-center;
+}
+
+.nav-links a,
+.nav-links span {
+  @apply inline-flex items-center justify-center min-w-[2.5rem] h-10 px-3
+         rounded-lg text-body-sm font-medium no-underline transition-colors;
+}
+
+.nav-links a {
+  @apply bg-white text-dark-600 border border-gray-200
+         hover:bg-primary-50 hover:text-primary-500 hover:border-primary-300;
+}
+
+.nav-links .current {
+  @apply bg-primary-500 text-white border-primary-500;
+}
+
+.nav-links .dots {
+  @apply border-none bg-transparent text-dark-400;
+}
+
+/* ==========================================================================
+   Reduced Motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-animate] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

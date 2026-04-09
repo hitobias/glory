@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Editor-specific styles for Gutenberg */
+.editor-styles-wrapper {
+  @apply font-sans text-body text-dark;
+}
+
+.editor-styles-wrapper h1 {
+  @apply text-h1 text-dark;
+}
+
+.editor-styles-wrapper h2 {
+  @apply text-h2 text-dark;
+}
+
+.editor-styles-wrapper h3 {
+  @apply text-h3 text-dark;
+}

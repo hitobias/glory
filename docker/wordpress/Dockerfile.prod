@@ -53,16 +53,10 @@ RUN { \
 } > /etc/apache2/conf-available/security-headers.conf \
     && a2enconf security-headers
 
-# Copy database seed for first-boot import
-# NOTE: Must be outside /var/www/html/ because the parent image declares
-# VOLUME /var/www/html — files COPY'd there after VOLUME are discarded at runtime
-COPY seed/glory_wp.sql.gz /opt/glory-seed/glory_wp.sql.gz
-
-# First-boot init script
+# First-boot init script (URL replacement + uploads download)
+# DB import is handled by MySQL's /docker-entrypoint-initdb.d/ mechanism
 COPY glory-entrypoint.sh /usr/local/bin/glory-entrypoint.sh
 RUN chmod +x /usr/local/bin/glory-entrypoint.sh
 
-# Override entrypoint: our script starts WP's docker-entrypoint.sh internally,
-# waits for setup, imports data on first boot, then keeps Apache running
 ENTRYPOINT ["glory-entrypoint.sh"]
 CMD ["apache2-foreground"]

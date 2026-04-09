@@ -1,0 +1,8 @@
+FROM mysql:8.0
+
+# Copy custom MySQL config
+COPY my.cnf /etc/mysql/conf.d/custom.cnf
+
+# Copy database seed — MySQL automatically imports .sql.gz files
+# from /docker-entrypoint-initdb.d/ on FIRST boot (empty data volume)
+COPY seed/glory_wp.sql.gz /docker-entrypoint-initdb.d/001-glory-data.sql.gz

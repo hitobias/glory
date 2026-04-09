@@ -40,7 +40,9 @@ services:
       - dokploy-network
 
   db:
-    image: mysql:8.0
+    build:
+      context: ./docker/mysql
+      dockerfile: Dockerfile.prod
     container_name: glory-db
     restart: unless-stopped
     environment:
@@ -50,7 +52,6 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql
-      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/custom.cnf:ro
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
       interval: 10s

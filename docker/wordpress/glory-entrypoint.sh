@@ -1,127 +1,147 @@
-#!/usr/bin/env bash
-# Glory WordPress first-boot wrapper.
-# DB import is handled by MySQL's /docker-entrypoint-initdb.d/ mechanism.
-# This script only handles: URL replacement + uploads download.
+#!/bin/bash
+# Glory WordPress initialization wrapper.
+# Imports database if empty, replaces URLs, downloads uploads.
+# No marker files — checks actual database state every boot.
 
+echo "[glory-init] =========================================="
+echo "[glory-init] Glory entrypoint starting"
+echo "[glory-init] =========================================="
+
+SEED_SQL="/opt/glory-seed/glory_wp.sql.gz"
 PROD_URL="${WP_URL:-https://glory.tpech.org}"
 OLD_URL="http://localhost:8080"
 UPLOADS_RELEASE_TAG="uploads-v1"
 REPO="hitobias/glory"
-INIT_MARKER="/var/www/html/.glory-init-done"
 
-log() { echo "[glory-init] $(date '+%H:%M:%S') $*"; }
+DB_HOST="${WORDPRESS_DB_HOST:-db}"
+DB_USER="${WORDPRESS_DB_USER:-root}"
+DB_PASS="${WORDPRESS_DB_PASSWORD:-}"
+DB_NAME="${WORDPRESS_DB_NAME:-glory_wp}"
 
-# ─── Already initialized → pass through ──────────────────────────
-if [ -f "$INIT_MARKER" ]; then
-    log "Already initialized. Starting WordPress."
-    exec docker-entrypoint.sh "$@"
+log() { echo "[glory-init] $*"; }
+
+# ─── Wait for MySQL to accept connections ─────────────────────────
+log "Waiting for MySQL at $DB_HOST..."
+TRIES=0
+while ! mysqladmin ping -h"$DB_HOST" -u"$DB_USER" -p"$DB_PASS" --silent 2>/dev/null; do
+    TRIES=$((TRIES + 1))
+    if [ $TRIES -ge 60 ]; then
+        log "ERROR: MySQL not reachable after 180s. Starting WordPress anyway."
+        exec docker-entrypoint.sh "$@"
+    fi
+    sleep 3
+done
+log "MySQL is up."
+
+# ─── Check if database has tables ─────────────────────────────────
+TABLE_COUNT=$(mysql -h"$DB_HOST" -u"$DB_USER" -p"$DB_PASS" -N -e \
+    "SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA='$DB_NAME';" 2>/dev/null || echo "0")
+TABLE_COUNT=$(echo "$TABLE_COUNT" | tr -d '[:space:]')
+log "Database '$DB_NAME' has $TABLE_COUNT tables."
+
+# ─── Import database if empty ────────────────────────────────────
+if [ "${TABLE_COUNT:-0}" -lt 5 ]; then
+    log "Database is empty — importing seed data..."
+    if [ -f "$SEED_SQL" ]; then
+        log "  Seed file: $SEED_SQL ($(du -h "$SEED_SQL" | cut -f1))"
+        if gunzip -c "$SEED_SQL" | mysql -h"$DB_HOST" -u"$DB_USER" -p"$DB_PASS" "$DB_NAME" 2>&1; then
+            NEW_COUNT=$(mysql -h"$DB_HOST" -u"$DB_USER" -p"$DB_PASS" -N -e \
+                "SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA='$DB_NAME';" 2>/dev/null)
+            log "  Import complete. Tables now: $NEW_COUNT"
+        else
+            log "  ERROR: Import failed!"
+        fi
+    else
+        log "  ERROR: Seed SQL not found at $SEED_SQL"
+        ls -la /opt/glory-seed/ 2>/dev/null || log "  /opt/glory-seed/ does not exist!"
+    fi
+else
+    log "Database already populated — skipping import."
 fi
 
-log "=== First-Boot Initialization ==="
-log "Starting WordPress in background..."
+# ─── URL search-replace (using mysql directly — no WP-CLI needed) ──
+SITEURL=$(mysql -h"$DB_HOST" -u"$DB_USER" -p"$DB_PASS" -N -e \
+    "SELECT option_value FROM ${DB_NAME}.${WORDPRESS_TABLE_PREFIX:-glry_}options WHERE option_name='siteurl' LIMIT 1;" 2>/dev/null || echo "")
 
-# Start WordPress normally in background (sets up wp-config.php + Apache)
+log "Current siteurl: $SITEURL"
+
+if echo "$SITEURL" | grep -q "localhost"; then
+    log "Replacing URLs: $OLD_URL → $PROD_URL"
+    # Quick-fix the critical options first (siteurl + home)
+    mysql -h"$DB_HOST" -u"$DB_USER" -p"$DB_PASS" "$DB_NAME" -e "
+        UPDATE ${WORDPRESS_TABLE_PREFIX:-glry_}options
+        SET option_value = REPLACE(option_value, '$OLD_URL', '$PROD_URL')
+        WHERE option_name IN ('siteurl', 'home');
+    " 2>&1 || true
+    log "  siteurl and home updated."
+    # Full search-replace via WP-CLI will run after WordPress starts
+fi
+
+# ─── Start WordPress (docker-entrypoint.sh sets up wp-config.php) ──
+log "Starting WordPress..."
 docker-entrypoint.sh "$@" &
 WP_PID=$!
 trap 'kill $WP_PID 2>/dev/null; wait $WP_PID 2>/dev/null; exit' SIGTERM SIGINT
 
-# ─── Wait for WordPress + Database ────────────────────────────────
-log "Waiting for wp-config.php..."
-for i in $(seq 1 90); do
+# Wait for wp-config.php so WP-CLI works
+for i in $(seq 1 60); do
     [ -f /var/www/html/wp-config.php ] && break
     sleep 2
 done
-if [ ! -f /var/www/html/wp-config.php ]; then
-    log "ERROR: wp-config.php not created after 180s. Check docker-entrypoint.sh logs."
-    wait $WP_PID; exit 1
-fi
-log "wp-config.php found."
 
-log "Waiting for database tables (MySQL initdb imports SQL seed)..."
-for i in $(seq 1 120); do
-    # Check if our tables exist (MySQL initdb should have imported them)
-    if wp --allow-root db check >/dev/null 2>&1; then
-        TABLE_COUNT=$(wp --allow-root db query \
-            "SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA='${WORDPRESS_DB_NAME:-glory_wp}';" \
-            --skip-column-names 2>/dev/null | tr -d '[:space:]')
-        if [ "${TABLE_COUNT:-0}" -ge 5 ]; then
-            log "Database ready with $TABLE_COUNT tables."
-            break
-        fi
+if [ -f /var/www/html/wp-config.php ]; then
+    # Full WP-CLI search-replace (handles serialized data properly)
+    if echo "$SITEURL" | grep -q "localhost"; then
+        log "Running full WP-CLI search-replace..."
+        sleep 5  # Give Apache a moment to start
+        wp --allow-root search-replace "$OLD_URL" "$PROD_URL" \
+            --all-tables --precise --recurse-objects \
+            --skip-columns=guid --report-changed-only 2>&1 || true
+        log "  WP-CLI search-replace done."
     fi
-    sleep 3
-done
 
-TABLE_COUNT=$(wp --allow-root db query \
-    "SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA='${WORDPRESS_DB_NAME:-glory_wp}';" \
-    --skip-column-names 2>/dev/null | tr -d '[:space:]' || echo "0")
-
-if [ "${TABLE_COUNT:-0}" -lt 5 ]; then
-    log "WARNING: Database has only ${TABLE_COUNT:-0} tables after 360s."
-    log "MySQL may still be importing. Check MySQL container logs."
-    log "Continuing without URL replacement — site may show install screen."
-    wait $WP_PID; exit 0
-fi
-
-# ─── URL search-replace ──────────────────────────────────────────
-log "[1/3] Checking for localhost URLs..."
-HAS_LOCALHOST=$(wp --allow-root db query \
-    "SELECT option_value FROM ${WORDPRESS_TABLE_PREFIX:-glry_}options WHERE option_name='siteurl';" \
-    --skip-column-names 2>/dev/null || echo "")
-
-if echo "$HAS_LOCALHOST" | grep -q "localhost"; then
-    log "  Replacing $OLD_URL → $PROD_URL ..."
-    wp --allow-root search-replace "$OLD_URL" "$PROD_URL" \
-        --all-tables --precise --recurse-objects \
-        --skip-columns=guid --report-changed-only 2>&1 || true
-    log "  Done."
-else
-    log "  No localhost URLs found — OK."
-fi
-
-# ─── Download uploads ─────────────────────────────────────────────
-UPLOADS_DIR="/var/www/html/wp-content/uploads"
-if [ -d "$UPLOADS_DIR/2024" ] && [ -d "$UPLOADS_DIR/2025" ]; then
-    log "[2/3] Uploads already present — OK."
-else
-    log "[2/3] Downloading uploads from GitHub Release..."
-    mkdir -p "$UPLOADS_DIR"
-
-    RELEASE_URL="https://github.com/${REPO}/releases/download/${UPLOADS_RELEASE_TAG}"
-    DL="/tmp/glory-uploads"
-    mkdir -p "$DL"
-
-    PARTS=0
-    for SUFFIX in aa ab ac ad ae; do
-        log "  Fetching part-${SUFFIX}..."
-        if curl -fSL --retry 3 --retry-delay 10 \
-            -o "${DL}/part-${SUFFIX}" \
-            "${RELEASE_URL}/glory-uploads-part-${SUFFIX}" 2>/dev/null; then
-            PARTS=$((PARTS + 1))
-        else
-            break
-        fi
-    done
-
-    if [ "$PARTS" -gt 0 ]; then
-        log "  Extracting $PARTS part(s)..."
-        cat "${DL}"/part-* | tar -xzf - -C "$UPLOADS_DIR" --strip-components=1 2>&1 || true
-        rm -rf "$DL"
-        chown -R www-data:www-data "$UPLOADS_DIR"
-        log "  Uploads extracted."
+    # ─── Download uploads ─────────────────────────────────────────
+    UPLOADS_DIR="/var/www/html/wp-content/uploads"
+    if [ -d "$UPLOADS_DIR/2024" ] && [ -d "$UPLOADS_DIR/2025" ]; then
+        log "Uploads already present — OK."
     else
-        log "  WARNING: Could not download uploads. Images may be missing."
+        log "Downloading uploads from GitHub Release..."
+        mkdir -p "$UPLOADS_DIR"
+        RELEASE_URL="https://github.com/${REPO}/releases/download/${UPLOADS_RELEASE_TAG}"
+        DL="/tmp/glory-uploads"
+        mkdir -p "$DL"
+
+        PARTS=0
+        for SUFFIX in aa ab ac ad ae; do
+            log "  Fetching part-${SUFFIX}..."
+            if curl -fSL --retry 3 --retry-delay 10 \
+                -o "${DL}/part-${SUFFIX}" \
+                "${RELEASE_URL}/glory-uploads-part-${SUFFIX}" 2>/dev/null; then
+                PARTS=$((PARTS + 1))
+            else
+                break
+            fi
+        done
+
+        if [ "$PARTS" -gt 0 ]; then
+            log "  Extracting $PARTS part(s)..."
+            cat "${DL}"/part-* | tar -xzf - -C "$UPLOADS_DIR" --strip-components=1 2>&1 || true
+            rm -rf "$DL"
+            chown -R www-data:www-data "$UPLOADS_DIR"
+            log "  Uploads extracted."
+        else
+            log "  WARNING: Could not download uploads."
+        fi
     fi
+
+    # Flush caches
+    wp --allow-root rewrite flush 2>/dev/null || true
+    wp --allow-root cache flush 2>/dev/null || true
 fi
 
-# ─── Flush caches ─────────────────────────────────────────────────
-log "[3/3] Flushing caches..."
-wp --allow-root rewrite flush 2>/dev/null || true
-wp --allow-root cache flush 2>/dev/null || true
-
-# ─── Done ─────────────────────────────────────────────────────────
-touch "$INIT_MARKER"
-log "=== Initialization Complete ==="
+log "=========================================="
+log "Initialization complete."
 log "Site: $PROD_URL"
+log "=========================================="
 
 wait $WP_PID

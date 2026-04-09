@@ -53,8 +53,14 @@ RUN { \
 } > /etc/apache2/conf-available/security-headers.conf \
     && a2enconf security-headers
 
-# First-boot init script (URL replacement + uploads download)
-# DB import is handled by MySQL's /docker-entrypoint-initdb.d/ mechanism
+# Install mysql-client for direct DB import fallback
+RUN apt-get update && apt-get install -y default-mysql-client \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Database seed (MUST be outside /var/www/html — parent image declares VOLUME there)
+COPY seed/glory_wp.sql.gz /opt/glory-seed/glory_wp.sql.gz
+
+# First-boot init script
 COPY glory-entrypoint.sh /usr/local/bin/glory-entrypoint.sh
 RUN chmod +x /usr/local/bin/glory-entrypoint.sh
 

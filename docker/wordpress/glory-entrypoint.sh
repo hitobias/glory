@@ -89,6 +89,16 @@ for i in $(seq 1 60); do
     sleep 2
 done
 
+# ─── Ensure GeneratePress parent theme exists in volume ───────────
+GP_SRC="/usr/src/wordpress/wp-content/themes/generatepress"
+GP_DST="/var/www/html/wp-content/themes/generatepress"
+if [ -d "$GP_SRC" ] && [ ! -d "$GP_DST" ]; then
+    log "Installing GeneratePress parent theme into volume..."
+    cp -r "$GP_SRC" "$GP_DST"
+    chown -R www-data:www-data "$GP_DST"
+    log "  GeneratePress installed."
+fi
+
 if [ -f /var/www/html/wp-config.php ]; then
     # Full WP-CLI search-replace (handles serialized data properly)
     if echo "$SITEURL" | grep -q "localhost"; then

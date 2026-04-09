@@ -53,9 +53,15 @@ RUN { \
 } > /etc/apache2/conf-available/security-headers.conf \
     && a2enconf security-headers
 
-# Install mysql-client for direct DB import fallback
+# Install mysql-client for direct DB import
 RUN apt-get update && apt-get install -y default-mysql-client \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install GeneratePress parent theme (glory-theme is a child theme)
+RUN curl -L -o /tmp/generatepress.zip \
+    https://downloads.wordpress.org/theme/generatepress.latest-stable.zip \
+    && unzip -q /tmp/generatepress.zip -d /usr/src/wordpress/wp-content/themes/ \
+    && rm /tmp/generatepress.zip
 
 # Database seed (MUST be outside /var/www/html — parent image declares VOLUME there)
 COPY seed/glory_wp.sql.gz /opt/glory-seed/glory_wp.sql.gz

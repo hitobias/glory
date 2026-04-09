@@ -54,7 +54,9 @@ RUN { \
     && a2enconf security-headers
 
 # Copy database seed for first-boot import
-COPY seed/glory_wp.sql.gz /var/www/html/glory_wp.sql.gz
+# NOTE: Must be outside /var/www/html/ because the parent image declares
+# VOLUME /var/www/html — files COPY'd there after VOLUME are discarded at runtime
+COPY seed/glory_wp.sql.gz /opt/glory-seed/glory_wp.sql.gz
 
 # First-boot init script
 COPY glory-entrypoint.sh /usr/local/bin/glory-entrypoint.sh

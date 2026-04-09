@@ -52,3 +52,15 @@ RUN { \
     echo '</IfModule>'; \
 } > /etc/apache2/conf-available/security-headers.conf \
     && a2enconf security-headers
+
+# Copy database seed for first-boot import
+COPY seed/glory_wp.sql.gz /var/www/html/glory_wp.sql.gz
+
+# First-boot init script
+COPY glory-entrypoint.sh /usr/local/bin/glory-entrypoint.sh
+RUN chmod +x /usr/local/bin/glory-entrypoint.sh
+
+# Override entrypoint: our script starts WP's docker-entrypoint.sh internally,
+# waits for setup, imports data on first boot, then keeps Apache running
+ENTRYPOINT ["glory-entrypoint.sh"]
+CMD ["apache2-foreground"]

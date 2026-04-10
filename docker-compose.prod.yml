@@ -16,6 +16,7 @@ services:
       WP_URL: ${WP_URL:-https://glory.tpech.org}
       WORDPRESS_DEBUG: ""
       WORDPRESS_CONFIG_EXTRA: |
+        define('WP_ENV', 'production');
         define('DISALLOW_FILE_EDIT', true);
         define('DISALLOW_FILE_MODS', false);
         define('WP_MEMORY_LIMIT', '256M');

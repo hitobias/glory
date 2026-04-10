@@ -8,8 +8,7 @@ wp-content/uploads/
 node_modules/
 wp-content/themes/glory-theme/node_modules/
 
-# Build output
-wp-content/themes/glory-theme/dist/
+# Build output (dist/ is committed for production deployment)
 
 # OS files
 .DS_Store

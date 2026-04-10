@@ -89,23 +89,6 @@ for i in $(seq 1 60); do
     sleep 2
 done
 
-# ─── Ensure GeneratePress parent theme exists in volume ───────────
-GP_DIR="/var/www/html/wp-content/themes/generatepress"
-if [ ! -f "$GP_DIR/style.css" ]; then
-    log "GeneratePress not found — downloading from WordPress.org..."
-    curl -fSL -o /tmp/generatepress.zip \
-        https://downloads.wordpress.org/theme/generatepress.latest-stable.zip 2>/dev/null
-    if [ -f /tmp/generatepress.zip ]; then
-        unzip -qo /tmp/generatepress.zip -d /var/www/html/wp-content/themes/
-        chown -R www-data:www-data "$GP_DIR"
-        rm -f /tmp/generatepress.zip
-        log "  GeneratePress installed."
-    else
-        log "  ERROR: Failed to download GeneratePress!"
-    fi
-else
-    log "GeneratePress parent theme present — OK."
-fi
 
 if [ -f /var/www/html/wp-config.php ]; then
     # Full WP-CLI search-replace (handles serialized data properly)

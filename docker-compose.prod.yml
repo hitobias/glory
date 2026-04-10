@@ -28,6 +28,7 @@ services:
         }
     volumes:
       - wordpress_data:/var/www/html
+      - ./wp-content/themes/generatepress:/var/www/html/wp-content/themes/generatepress:ro
       - ./wp-content/themes/glory-theme:/var/www/html/wp-content/themes/glory-theme:ro
       - uploads_data:/var/www/html/wp-content/uploads
     depends_on:

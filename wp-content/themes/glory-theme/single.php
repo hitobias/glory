@@ -13,19 +13,19 @@ get_header();
 <main id="main-content" class="site-main">
     <?php while (have_posts()) : the_post(); ?>
 
-        <!-- Hero -->
-        <section class="bg-gradient-to-br from-accent-green to-dark py-16 text-white">
+        <!-- Header -->
+        <section class="pt-28 pb-10 md:pt-32 md:pb-12 bg-warm-50 border-b border-gray-100">
             <div class="container-content max-w-4xl">
                 <?php
                 $categories = get_the_category();
                 if (!empty($categories)) :
                 ?>
-                    <span class="badge bg-accent text-dark mb-4"><?php echo esc_html($categories[0]->name); ?></span>
+                    <span class="badge-primary mb-4"><?php echo esc_html($categories[0]->name); ?></span>
                 <?php endif; ?>
 
-                <h1 class="text-h1 text-white mb-4"><?php echo esc_html(get_the_title()); ?></h1>
+                <h1 class="text-h2 md:text-h1 text-dark mb-4"><?php echo esc_html(get_the_title()); ?></h1>
 
-                <div class="flex items-center gap-4 text-white/70 text-body-sm">
+                <div class="flex items-center gap-4 text-dark-400 text-body-sm">
                     <time datetime="<?php echo esc_attr(get_the_date('Y-m-d')); ?>">
                         <?php echo esc_html(glory_post_date()); ?>
                     </time>
@@ -39,7 +39,7 @@ get_header();
         <section class="section">
             <div class="container-content max-w-4xl">
                 <?php if (has_post_thumbnail()) : ?>
-                    <figure class="mb-10 -mt-8">
+                    <figure class="mb-10">
                         <?php the_post_thumbnail('glory-hero', [
                             'class' => 'w-full rounded-card shadow-card',
                         ]); ?>

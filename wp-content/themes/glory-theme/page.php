@@ -15,9 +15,9 @@ get_header();
     <?php while (have_posts()) : the_post(); ?>
 
         <!-- Page Header -->
-        <section class="bg-gradient-to-br from-accent-green to-dark py-12 md:py-16">
+        <section class="pt-28 pb-10 md:pt-32 md:pb-12 bg-warm-50 border-b border-gray-100">
             <div class="container-content text-center">
-                <h1 class="text-h2 md:text-h1 text-white"><?php echo esc_html(get_the_title()); ?></h1>
+                <h1 class="text-h2 md:text-h1 text-dark"><?php echo esc_html(get_the_title()); ?></h1>
             </div>
         </section>
 
@@ -25,7 +25,7 @@ get_header();
         <section class="section">
             <div class="container-content max-w-4xl">
                 <?php if (has_post_thumbnail()) : ?>
-                    <figure class="mb-8 md:mb-10 -mt-6 md:-mt-8">
+                    <figure class="mb-8 md:mb-10">
                         <?php the_post_thumbnail('glory-hero', [
                             'class' => 'w-full rounded-card shadow-card',
                         ]); ?>

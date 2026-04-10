@@ -35,4 +35,8 @@ data/export/
 # Production env (contains real secrets)
 .env.production
 
+# Database seed files (contain real user data — NEVER commit)
+docker/*/seed/*.sql.gz
+docker/*/seed/*.sql
+
 # Docker volumes (data is in named volumes)

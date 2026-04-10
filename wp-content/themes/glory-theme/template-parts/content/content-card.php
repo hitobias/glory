@@ -32,7 +32,7 @@ defined('ABSPATH') || exit;
 
         <h3 class="text-h4 mb-2">
             <a href="<?php the_permalink(); ?>" class="text-dark hover:text-primary-500 no-underline transition-colors">
-                <?php the_title(); ?>
+                <?php echo esc_html(get_the_title()); ?>
             </a>
         </h3>
 

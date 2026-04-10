@@ -34,7 +34,7 @@ get_header();
                     ?>
                         <span class="badge bg-accent text-dark mb-4"><?php echo esc_html($types[0]->name); ?></span>
                     <?php endif; ?>
-                    <h1 class="text-h1 text-white"><?php the_title(); ?></h1>
+                    <h1 class="text-h1 text-white"><?php echo esc_html(get_the_title()); ?></h1>
                 </div>
             </div>
         </section>
@@ -106,7 +106,7 @@ get_header();
                             </p>
                             <footer class="border-t pt-4">
                                 <cite class="not-italic">
-                                    <p class="font-semibold text-dark text-body-sm"><?php the_title(); ?></p>
+                                    <p class="font-semibold text-dark text-body-sm"><?php echo esc_html(get_the_title()); ?></p>
                                     <?php
                                     $t_types = get_the_terms(get_the_ID(), 'testimonial_type');
                                     if (!empty($t_types)) :

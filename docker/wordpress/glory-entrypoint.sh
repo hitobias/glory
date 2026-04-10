@@ -20,10 +20,17 @@ DB_NAME="${WORDPRESS_DB_NAME:-glory_wp}"
 
 log() { echo "[glory-init] $*"; }
 
+# ─── Create temp MySQL config (avoids exposing password in ps output) ──
+MYSQL_CNF=$(mktemp)
+printf "[client]\nhost=%s\nuser=%s\npassword=%s\n" "$DB_HOST" "$DB_USER" "$DB_PASS" > "$MYSQL_CNF"
+chmod 600 "$MYSQL_CNF"
+cleanup_cnf() { rm -f "$MYSQL_CNF"; }
+trap 'cleanup_cnf' EXIT
+
 # ─── Wait for MySQL to accept connections ─────────────────────────
 log "Waiting for MySQL at $DB_HOST..."
 TRIES=0
-while ! mysqladmin ping -h"$DB_HOST" -u"$DB_USER" -p"$DB_PASS" --silent 2>/dev/null; do
+while ! mysqladmin --defaults-file="$MYSQL_CNF" ping --silent 2>/dev/null; do
     TRIES=$((TRIES + 1))
     if [ $TRIES -ge 60 ]; then
         log "ERROR: MySQL not reachable after 180s. Starting WordPress anyway."
@@ -34,7 +41,7 @@ done
 log "MySQL is up."
 
 # ─── Check if database has tables ─────────────────────────────────
-TABLE_COUNT=$(mysql -h"$DB_HOST" -u"$DB_USER" -p"$DB_PASS" -N -e \
+TABLE_COUNT=$(mysql --defaults-file="$MYSQL_CNF" -N -e \
     "SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA='$DB_NAME';" 2>/dev/null || echo "0")
 TABLE_COUNT=$(echo "$TABLE_COUNT" | tr -d '[:space:]')
 log "Database '$DB_NAME' has $TABLE_COUNT tables."
@@ -44,8 +51,8 @@ if [ "${TABLE_COUNT:-0}" -lt 5 ]; then
     log "Database is empty — importing seed data..."
     if [ -f "$SEED_SQL" ]; then
         log "  Seed file: $SEED_SQL ($(du -h "$SEED_SQL" | cut -f1))"
-        if gunzip -c "$SEED_SQL" | mysql -h"$DB_HOST" -u"$DB_USER" -p"$DB_PASS" "$DB_NAME" 2>&1; then
-            NEW_COUNT=$(mysql -h"$DB_HOST" -u"$DB_USER" -p"$DB_PASS" -N -e \
+        if gunzip -c "$SEED_SQL" | mysql --defaults-file="$MYSQL_CNF" "$DB_NAME" 2>&1; then
+            NEW_COUNT=$(mysql --defaults-file="$MYSQL_CNF" -N -e \
                 "SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA='$DB_NAME';" 2>/dev/null)
             log "  Import complete. Tables now: $NEW_COUNT"
         else
@@ -60,7 +67,7 @@ else
 fi
 
 # ─── URL search-replace (using mysql directly — no WP-CLI needed) ──
-SITEURL=$(mysql -h"$DB_HOST" -u"$DB_USER" -p"$DB_PASS" -N -e \
+SITEURL=$(mysql --defaults-file="$MYSQL_CNF" -N -e \
     "SELECT option_value FROM ${DB_NAME}.${WORDPRESS_TABLE_PREFIX:-glry_}options WHERE option_name='siteurl' LIMIT 1;" 2>/dev/null || echo "")
 
 log "Current siteurl: $SITEURL"
@@ -68,7 +75,7 @@ log "Current siteurl: $SITEURL"
 if echo "$SITEURL" | grep -q "localhost"; then
     log "Replacing URLs: $OLD_URL → $PROD_URL"
     # Quick-fix the critical options first (siteurl + home)
-    mysql -h"$DB_HOST" -u"$DB_USER" -p"$DB_PASS" "$DB_NAME" -e "
+    mysql --defaults-file="$MYSQL_CNF" "$DB_NAME" -e "
         UPDATE ${WORDPRESS_TABLE_PREFIX:-glry_}options
         SET option_value = REPLACE(option_value, '$OLD_URL', '$PROD_URL')
         WHERE option_name IN ('siteurl', 'home');
@@ -91,6 +98,7 @@ done
 
 # ─── Start WordPress (docker-entrypoint.sh sets up wp-config.php) ──
 log "Starting WordPress..."
+cleanup_cnf  # Remove temp MySQL config before handing off
 docker-entrypoint.sh "$@" &
 WP_PID=$!
 trap 'kill $WP_PID 2>/dev/null; wait $WP_PID 2>/dev/null; exit' SIGTERM SIGINT

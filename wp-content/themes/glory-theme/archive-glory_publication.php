@@ -68,7 +68,7 @@ $pub_types = get_terms([
                                 <?php endif; ?>
                                 <h2 class="text-h4 mt-1 mb-2">
                                     <a href="<?php the_permalink(); ?>" class="text-dark hover:text-primary-500 no-underline">
-                                        <?php the_title(); ?>
+                                        <?php echo esc_html(get_the_title()); ?>
                                     </a>
                                 </h2>
                                 <?php if (has_excerpt()) : ?>

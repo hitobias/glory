@@ -18,7 +18,7 @@ services:
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_ENV', 'production');
         define('DISALLOW_FILE_EDIT', true);
-        define('DISALLOW_FILE_MODS', false);
+        define('DISALLOW_FILE_MODS', true);
         define('WP_MEMORY_LIMIT', '256M');
         define('WP_MAX_MEMORY_LIMIT', '512M');
         define('WP_HOME', '${WP_URL}');
@@ -51,7 +51,7 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      test: ["CMD-SHELL", "MYSQL_PWD=$${MYSQL_ROOT_PASSWORD} mysqladmin ping -h localhost -u root --silent"]
       interval: 10s
       timeout: 5s
       retries: 5

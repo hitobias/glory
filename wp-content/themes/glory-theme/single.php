@@ -23,7 +23,7 @@ get_header();
                     <span class="badge bg-accent text-dark mb-4"><?php echo esc_html($categories[0]->name); ?></span>
                 <?php endif; ?>
 
-                <h1 class="text-h1 text-white mb-4"><?php the_title(); ?></h1>
+                <h1 class="text-h1 text-white mb-4"><?php echo esc_html(get_the_title()); ?></h1>
 
                 <div class="flex items-center gap-4 text-white/70 text-body-sm">
                     <time datetime="<?php echo esc_attr(get_the_date('Y-m-d')); ?>">

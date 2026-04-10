@@ -17,7 +17,7 @@ get_header();
         <!-- Page Header -->
         <section class="bg-gradient-to-br from-accent-green to-dark py-12 md:py-16">
             <div class="container-content text-center">
-                <h1 class="text-h2 md:text-h1 text-white"><?php the_title(); ?></h1>
+                <h1 class="text-h2 md:text-h1 text-white"><?php echo esc_html(get_the_title()); ?></h1>
             </div>
         </section>
 

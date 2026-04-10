@@ -22,7 +22,7 @@ get_header();
                 ?>
                     <span class="badge bg-accent text-dark mb-4"><?php echo esc_html($types[0]->name); ?></span>
                 <?php endif; ?>
-                <h1 class="text-h1 text-white mb-4"><?php the_title(); ?></h1>
+                <h1 class="text-h1 text-white mb-4"><?php echo esc_html(get_the_title()); ?></h1>
                 <p class="text-white/70 text-body-sm">
                     <?php echo esc_html(glory_post_date()); ?>
                 </p>
@@ -87,7 +87,7 @@ get_header();
                             <?php endif; ?>
                             <div class="p-4">
                                 <h3 class="text-body font-semibold">
-                                    <a href="<?php the_permalink(); ?>" class="text-dark hover:text-primary-500 no-underline"><?php the_title(); ?></a>
+                                    <a href="<?php the_permalink(); ?>" class="text-dark hover:text-primary-500 no-underline"><?php echo esc_html(get_the_title()); ?></a>
                                 </h3>
                             </div>
                         </article>

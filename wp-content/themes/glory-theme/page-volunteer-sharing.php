@@ -95,7 +95,7 @@ get_header();
                                 <a href="<?php the_permalink(); ?>" class="block aspect-[3/2] overflow-hidden" aria-hidden="true" tabindex="-1">
                                     <?php the_post_thumbnail('glory-card', [
                                         'class' => 'w-full h-full object-cover group-hover:scale-105 transition-transform duration-300',
-                                        'alt'   => get_the_title(),
+                                        'alt'   => esc_attr(get_the_title()),
                                     ]); ?>
                                 </a>
                             <?php else : ?>
@@ -111,7 +111,7 @@ get_header();
                                 </time>
                                 <h3 class="text-body font-bold text-dark mb-2">
                                     <a href="<?php the_permalink(); ?>" class="no-underline hover:text-primary-500 transition-colors">
-                                        <?php the_title(); ?>
+                                        <?php echo esc_html(get_the_title()); ?>
                                     </a>
                                 </h3>
                                 <p class="text-body-sm text-dark-400">

@@ -20,7 +20,7 @@ $program_types = get_terms([
     <!-- Page Header -->
     <section class="bg-gradient-to-br from-accent-green to-dark py-20 text-white text-center">
         <div class="container-content">
-            <h1 class="text-h1 text-white mb-4"><?php the_title(); ?></h1>
+            <h1 class="text-h1 text-white mb-4"><?php echo esc_html(get_the_title()); ?></h1>
             <p class="text-body-lg text-white/80 max-w-2xl mx-auto">
                 我們提供多元化的教育服務，涵蓋生命教育、快樂學習、合唱團及青少年關懷
             </p>
@@ -89,7 +89,7 @@ $program_types = get_terms([
                                 <?php endif; ?>
 
                                 <h3 class="text-h4 mb-2">
-                                    <a href="<?php the_permalink(); ?>" class="text-dark hover:text-primary-500 no-underline"><?php the_title(); ?></a>
+                                    <a href="<?php the_permalink(); ?>" class="text-dark hover:text-primary-500 no-underline"><?php echo esc_html(get_the_title()); ?></a>
                                 </h3>
 
                                 <?php if (has_excerpt()) : ?>

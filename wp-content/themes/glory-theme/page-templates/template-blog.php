@@ -99,7 +99,7 @@ $blog_query = new WP_Query([
                                 ?>
                                     <li>
                                         <a href="<?php the_permalink(); ?>" class="text-dark-500 hover:text-primary-500 no-underline text-body-sm">
-                                            <?php the_title(); ?>
+                                            <?php echo esc_html(get_the_title()); ?>
                                         </a>
                                         <span class="block text-dark-400 text-xs mt-0.5"><?php echo esc_html(glory_post_date()); ?></span>
                                     </li>

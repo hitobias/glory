@@ -68,7 +68,7 @@ $testimonial_types = get_terms([
                                     </div>
                                 <?php endif; ?>
                                 <cite class="not-italic">
-                                    <p class="font-semibold text-dark text-body-sm m-0"><?php the_title(); ?></p>
+                                    <p class="font-semibold text-dark text-body-sm m-0"><?php echo esc_html(get_the_title()); ?></p>
                                     <?php
                                     $types = get_the_terms(get_the_ID(), 'testimonial_type');
                                     if (!empty($types)) :

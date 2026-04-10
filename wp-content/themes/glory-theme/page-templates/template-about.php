@@ -14,7 +14,7 @@ get_header();
     <!-- Page Header -->
     <section class="bg-gradient-to-br from-accent-green to-dark py-20 text-white text-center">
         <div class="container-content">
-            <h1 class="text-h1 text-white mb-4"><?php the_title(); ?></h1>
+            <h1 class="text-h1 text-white mb-4"><?php echo esc_html(get_the_title()); ?></h1>
             <p class="text-body-lg text-white/80 max-w-2xl mx-auto">認識得榮社會福利基金會的使命、願景與團隊</p>
         </div>
     </section>

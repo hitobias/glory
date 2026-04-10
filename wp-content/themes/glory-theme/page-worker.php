@@ -201,7 +201,7 @@ get_header();
                                 <div class="card-body">
                                     <h3 class="text-body font-bold text-dark mb-2">
                                         <a href="<?php the_permalink(); ?>" class="no-underline hover:text-primary-500">
-                                            <?php the_title(); ?>
+                                            <?php echo esc_html(get_the_title()); ?>
                                         </a>
                                     </h3>
                                     <p class="text-body-sm text-dark-400"><?php echo glory_truncate(get_the_excerpt(), 80); ?></p>

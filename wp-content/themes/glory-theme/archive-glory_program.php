@@ -71,7 +71,7 @@ $program_types = get_terms([
 
                                 <h2 class="text-h4 mb-2">
                                     <a href="<?php the_permalink(); ?>" class="text-dark hover:text-primary-500 no-underline">
-                                        <?php the_title(); ?>
+                                        <?php echo esc_html(get_the_title()); ?>
                                     </a>
                                 </h2>
 

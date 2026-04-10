@@ -15,7 +15,7 @@ defined('ABSPATH') || exit;
         id="search-field"
         class="flex-1 px-4 py-3 border border-gray-300 rounded-lg text-body-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
         placeholder="<?php esc_attr_e('輸入關鍵字搜尋...', 'glory-theme'); ?>"
-        value="<?php echo get_search_query(); ?>"
+        value="<?php echo esc_attr(get_search_query()); ?>"
         name="s"
     >
     <button type="submit" class="btn-primary px-6">

@@ -17,7 +17,7 @@ $has_access = glory_can_access_volunteer_area();
     <!-- Page Header -->
     <section class="bg-gradient-to-br from-accent-green to-dark py-16 text-white text-center">
         <div class="container-content">
-            <h1 class="text-h1 text-white mb-3"><?php the_title(); ?></h1>
+            <h1 class="text-h1 text-white mb-3"><?php echo esc_html(get_the_title()); ?></h1>
             <p class="text-body-lg text-white/80">感謝您加入得榮志工行列</p>
         </div>
     </section>
@@ -98,7 +98,7 @@ $has_access = glory_can_access_volunteer_area();
                                             <li>
                                                 <a href="<?php the_permalink(); ?>" class="flex items-center gap-2 text-dark-500 hover:text-primary-500 no-underline text-body-sm">
                                                     <?php echo glory_get_icon('download', 'w-4 h-4 flex-shrink-0'); ?>
-                                                    <?php the_title(); ?>
+                                                    <?php echo esc_html(get_the_title()); ?>
                                                 </a>
                                             </li>
                                         <?php endwhile; ?>

@@ -38,7 +38,7 @@ get_header();
                             </div>
                         <?php endif; ?>
                         <div>
-                            <p class="font-bold text-dark text-h4 m-0"><?php the_title(); ?></p>
+                            <p class="font-bold text-dark text-h4 m-0"><?php echo esc_html(get_the_title()); ?></p>
                             <?php
                             $types = get_the_terms(get_the_ID(), 'testimonial_type');
                             if (!empty($types)) :

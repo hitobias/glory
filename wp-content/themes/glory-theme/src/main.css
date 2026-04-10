@@ -1104,6 +1104,28 @@ a.drawer-contact-item:hover {
 }
 
 /* Qubely/Elementor/VC block fallback styles */
+/* ==========================================================================
+   Content area — strip dark backgrounds from migrated blocks
+   Forces all page-builder blocks to light theme within article content.
+   ========================================================================== */
+
+.prose [style*="background"],
+.prose .has-background,
+.prose .wp-block-group.has-background,
+.prose .wp-block-cover,
+.prose .qubely-section,
+.prose .vc_row[style*="background"] {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+.prose [style*="color"],
+.prose .has-text-color {
+  color: inherit !important;
+}
+
+/* Qubely blocks — force light theme */
 .qubely-section,
 .qubely-row,
 .qubely-column,
@@ -1112,6 +1134,8 @@ a.drawer-contact-item:hover {
 .qubely-block-text-title-container,
 .qubely-block-text-title-inner {
   @apply block;
+  background: transparent !important;
+  padding: 0 !important;
 }
 
 .qubely-block-btn-wrapper {
@@ -1119,13 +1143,9 @@ a.drawer-contact-item:hover {
 }
 
 .qubely-block-btn-anchor {
-  @apply inline-flex items-center px-6 py-3 text-white rounded-lg
+  @apply inline-flex items-center px-6 py-3 rounded-lg
          font-semibold no-underline transition-colors;
-  background: linear-gradient(135deg, #195630 0%, #192a3d 100%);
-}
-
-.qubely-block-btn-anchor:hover {
-  background: linear-gradient(135deg, #1e6b3a 0%, #1e3550 100%);
+  @apply bg-primary-500 text-white hover:bg-primary-600;
 }
 
 .qubely-block-image-comparison {
@@ -1136,12 +1156,13 @@ a.drawer-contact-item:hover {
   @apply max-w-full h-auto;
 }
 
-/* Visual Composer (vc_row) fallback */
+/* Visual Composer (vc_row) fallback — force light */
 .vc_row,
 .vc_column_container,
 .vc_column-inner,
 .wpb_wrapper {
   @apply block;
+  background: transparent !important;
 }
 
 .vc_row {
@@ -1153,13 +1174,18 @@ a.drawer-contact-item:hover {
 .vc_col-sm-3 { @apply w-full md:w-[calc(25%-0.75rem)]; }
 .vc_col-sm-12 { @apply w-full; }
 
-/* Elementor fallback */
+/* Elementor fallback — force light */
 .elementor-widget-container {
   @apply block;
 }
 
 .elementor-heading-title {
   @apply text-h3 text-dark font-bold;
+}
+
+.elementor-section,
+.elementor-element[style*="background"] {
+  background: transparent !important;
 }
 
 /* ==========================================================================

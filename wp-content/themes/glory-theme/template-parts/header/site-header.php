@@ -87,12 +87,6 @@ $logo_url = GLORY_THEME_URI . '/assets/images/logo.png';
         ]);
         ?>
 
-        <!-- Drawer Donate CTA -->
-        <a href="<?php echo esc_url(home_url('/donation/')); ?>" class="drawer-donate-btn">
-            <?php echo glory_get_icon('heart', 'w-5 h-5'); ?>
-            愛心捐款
-        </a>
-
         <!-- Drawer Contact -->
         <div class="drawer-contact">
             <a href="tel:02-87881930" class="drawer-contact-item">

@@ -58,10 +58,14 @@ RUN apt-get update && apt-get install -y default-mysql-client \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Database seed (MUST be outside /var/www/html — parent image declares VOLUME there)
-COPY seed/glory_wp.sql.gz /opt/glory-seed/glory_wp.sql.gz
+COPY docker/wordpress/seed/glory_wp.sql.gz /opt/glory-seed/glory_wp.sql.gz
+
+# Themes (copied to volume at runtime by entrypoint — can't use /var/www/html directly)
+COPY wp-content/themes/generatepress /opt/themes/generatepress
+COPY wp-content/themes/glory-theme /opt/themes/glory-theme
 
 # First-boot init script
-COPY glory-entrypoint.sh /usr/local/bin/glory-entrypoint.sh
+COPY docker/wordpress/glory-entrypoint.sh /usr/local/bin/glory-entrypoint.sh
 RUN chmod +x /usr/local/bin/glory-entrypoint.sh
 
 ENTRYPOINT ["glory-entrypoint.sh"]

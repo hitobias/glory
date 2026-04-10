@@ -1,0 +1,6 @@
+*
+!docker/wordpress/Dockerfile.prod
+!docker/wordpress/glory-entrypoint.sh
+!docker/wordpress/seed/glory_wp.sql.gz
+!wp-content/themes/generatepress/
+!wp-content/themes/glory-theme/

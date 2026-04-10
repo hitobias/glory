@@ -77,6 +77,18 @@ if echo "$SITEURL" | grep -q "localhost"; then
     # Full search-replace via WP-CLI will run after WordPress starts
 fi
 
+# ─── Install themes into volume ───────────────────────────────────
+THEMES_DIR="/var/www/html/wp-content/themes"
+mkdir -p "$THEMES_DIR"
+for theme in generatepress glory-theme; do
+    if [ -d "/opt/themes/$theme" ]; then
+        rm -rf "$THEMES_DIR/$theme"
+        cp -r "/opt/themes/$theme" "$THEMES_DIR/$theme"
+        chown -R www-data:www-data "$THEMES_DIR/$theme"
+        log "Theme '$theme' installed."
+    fi
+done
+
 # ─── Start WordPress (docker-entrypoint.sh sets up wp-config.php) ──
 log "Starting WordPress..."
 docker-entrypoint.sh "$@" &

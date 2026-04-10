@@ -1,8 +1,8 @@
 services:
   wordpress:
     build:
-      context: ./docker/wordpress
-      dockerfile: Dockerfile.prod
+      context: .
+      dockerfile: docker/wordpress/Dockerfile.prod
     container_name: glory-wp
     restart: unless-stopped
     expose:
@@ -28,8 +28,6 @@ services:
         }
     volumes:
       - wordpress_data:/var/www/html
-      - ./wp-content/themes/generatepress:/var/www/html/wp-content/themes/generatepress:ro
-      - ./wp-content/themes/glory-theme:/var/www/html/wp-content/themes/glory-theme:ro
       - uploads_data:/var/www/html/wp-content/uploads
     depends_on:
       db:

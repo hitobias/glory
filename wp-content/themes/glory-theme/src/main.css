@@ -517,21 +517,21 @@ a.generate-back-to-top {
   width: 60%;
 }
 
-/* Active / ancestor — persistent underline + bold */
+/* Active / ancestor — accent underline + bold */
 .glory-nav > li.current-menu-item > a,
 .glory-nav > li.current-menu-ancestor > a {
-  color: white;
-  font-weight: 600;
+  @apply text-accent font-semibold;
 }
 
 .header-wrap.header-scrolled .glory-nav > li.current-menu-item > a,
 .header-wrap.header-scrolled .glory-nav > li.current-menu-ancestor > a {
-  color: white;
+  @apply text-accent;
 }
 
 .glory-nav > li.current-menu-item > a::after,
 .glory-nav > li.current-menu-ancestor > a::after {
   width: 70%;
+  @apply bg-accent;
 }
 
 /* Has-children chevron */

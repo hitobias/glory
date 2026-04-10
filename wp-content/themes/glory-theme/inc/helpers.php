@@ -123,3 +123,36 @@ function glory_get_social_links(): array {
         'line'      => get_option('glory_line_url', ''),
     ];
 }
+
+/**
+ * Encode non-ASCII characters in image URLs (fixes Chinese filename issues)
+ *
+ * WordPress generates <img src="...圖片33.jpg"> with raw UTF-8 filenames.
+ * Some browsers/CDNs fail to load these. This filter percent-encodes the
+ * filename portion while preserving the rest of the URL structure.
+ */
+function glory_encode_attachment_url(string $url): string {
+    $parts = explode('/wp-content/uploads/', $url, 2);
+    if (count($parts) !== 2) {
+        return $url;
+    }
+
+    $segments = explode('/', $parts[1]);
+    $encoded_segments = array_map(function ($segment) {
+        return rawurlencode($segment);
+    }, $segments);
+
+    return $parts[0] . '/wp-content/uploads/' . implode('/', $encoded_segments);
+}
+add_filter('wp_get_attachment_url', 'glory_encode_attachment_url');
+
+/**
+ * Encode srcset URLs for responsive images
+ */
+function glory_encode_srcset_urls(array $sources): array {
+    foreach ($sources as &$source) {
+        $source['url'] = glory_encode_attachment_url($source['url']);
+    }
+    return $sources;
+}
+add_filter('wp_calculate_image_srcset', 'glory_encode_srcset_urls');

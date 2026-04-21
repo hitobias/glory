@@ -213,8 +213,8 @@ get_header();
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10" data-stagger>
                 <div class="text-center md:text-left">
-                    <div class="w-14 h-14 mx-auto md:mx-0 mb-4 rounded-2xl bg-red-50 flex items-center justify-center text-red-500">
-                        <?php echo glory_get_icon('heart', 'w-7 h-7'); ?>
+                    <div class="aspect-[16/10] mb-5 rounded-card overflow-hidden shadow-sm">
+                        <img src="<?php echo esc_url(GLORY_THEME_URI . '/assets/images/life-education/awareness.jpg'); ?>" alt="別等到失去了生命才想起教育" loading="lazy" class="w-full h-full object-cover">
                     </div>
                     <h3 class="text-h4 mb-3">別等到失去了生命<br>才想起教育</h3>
                     <p class="text-dark-400 text-body-sm leading-relaxed">
@@ -223,8 +223,8 @@ get_header();
                 </div>
 
                 <div class="text-center md:text-left">
-                    <div class="w-14 h-14 mx-auto md:mx-0 mb-4 rounded-2xl bg-primary-50 flex items-center justify-center text-primary-500">
-                        <?php echo glory_get_icon('school', 'w-7 h-7'); ?>
+                    <div class="aspect-[16/10] mb-5 rounded-card overflow-hidden shadow-sm">
+                        <img src="<?php echo esc_url(GLORY_THEME_URI . '/assets/images/life-education/prevention.jpg'); ?>" alt="預防勝於補救的教育" loading="lazy" class="w-full h-full object-cover">
                     </div>
                     <h3 class="text-h4 mb-3">預防勝於補救的教育</h3>
                     <p class="text-dark-400 text-body-sm leading-relaxed">
@@ -233,8 +233,8 @@ get_header();
                 </div>
 
                 <div class="text-center md:text-left">
-                    <div class="w-14 h-14 mx-auto md:mx-0 mb-4 rounded-2xl bg-accent-50 flex items-center justify-center text-accent-700">
-                        <?php echo glory_get_icon('users', 'w-7 h-7'); ?>
+                    <div class="aspect-[16/10] mb-5 rounded-card overflow-hidden shadow-sm">
+                        <img src="<?php echo esc_url(GLORY_THEME_URI . '/assets/images/life-education/community.jpg'); ?>" alt="改變，需要眾人的看見" loading="lazy" class="w-full h-full object-cover">
                     </div>
                     <h3 class="text-h4 mb-3">改變，需要眾人的看見</h3>
                     <p class="text-dark-400 text-body-sm leading-relaxed">

@@ -133,35 +133,36 @@ get_header();
 
     <!-- 得榮少年月刊 -->
     <section class="section bg-gray-50">
-        <div class="container-content max-w-4xl">
-            <div class="section-header">
-                <h2>得榮少年月刊</h2>
-                <p>為方便各界朋友瞭解得榮少年們的成長與轉變，基金會精心製作得榮少年月刊</p>
-                <span class="section-header-bar"></span>
-            </div>
-
-            <!-- Testimonials -->
-            <div class="grid md:grid-cols-2 gap-6" data-stagger>
-                <div class="bg-white rounded-2xl p-6 shadow-card border-l-4 border-accent-green">
-                    <h4 class="font-bold text-dark mb-3">陳同學 · 得榮少年分享</h4>
-                    <p class="text-dark-600 text-body-sm">
-                        在我4歲時爸爸過世，媽媽帶著我和妹妹回越南。10歲，媽媽為了給我們更好的生活及教育，再帶我們回到台灣。但文化差距以及語言不流利，使我從小學到國中人際關係都不好，讓我內心很痛苦。國二時，我成為得榮少年，身邊多了關心我的人。
-                    </p>
+        <div class="container-content">
+            <div data-animate="fade-up">
+                <div class="section-header">
+                    <h2>得榮少年月刊</h2>
+                    <p>為方便各界朋友瞭解得榮少年們的成長與轉變，基金會精心製作得榮少年月刊：內文包含父母如何陪伴青少年成長，或對青少年的鼓勵與提醒，並有得榮少年與家長們、及志工關懷者們的分享。</p>
+                    <span class="section-header-bar"></span>
                 </div>
 
-                <div class="bg-white rounded-2xl p-6 shadow-card border-l-4 border-primary-500">
-                    <h4 class="font-bold text-dark mb-3">陳萍如 · 得榮少年家長分享</h4>
-                    <p class="text-dark-600 text-body-sm">
-                        感謝基金會這六年來發的獎助學金，對我們家的幫助很大，讓父母減輕重擔。我們做父母的都鼓勵孩子好好讀書，以後有機會、有能力，也要像得榮基金會一樣幫助別人。
-                    </p>
-                </div>
-            </div>
+                <!-- Testimonials — clean quote cards side-by-side -->
+                <div class="grid md:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto" data-stagger>
+                    <article class="testimonial-card testimonial-card--youth">
+                        <p class="text-dark-600 text-body-sm leading-loose flex-grow mb-6">
+                            在我4歲時爸爸過世，媽媽帶著我和妹妹回越南。10歲，媽媽為了給我們更好的生活及教育，再帶我們回到台灣。但文化差距以及語言不流利，使我從小學到國中人際關係都不好，讓我內心很痛苦。國二時，我成為得榮少年，身邊多了關心我的人。我可向她們訴說心事，當我難過時，有勇氣接受難以面對的事。感謝幫我申請得榮少年教育專案的得榮志工郭老師，以及各位阿姨、姊姊的鼓勵陪伴，讓我生活變得充實，人也變得不一樣。
+                        </p>
+                        <footer class="testimonial-card__footer">
+                            <p class="font-bold text-dark text-body">陳同學</p>
+                            <p class="testimonial-card__role testimonial-card__role--youth">得榮少年分享</p>
+                        </footer>
+                    </article>
 
-            <div class="text-center mt-8">
-                <a href="<?php echo esc_url(home_url('/publication/')); ?>" class="btn-outline">
-                    查看得榮少年月刊
-                    <?php echo glory_get_icon('arrow-right', 'w-5 h-5'); ?>
-                </a>
+                    <article class="testimonial-card testimonial-card--parent">
+                        <p class="text-dark-600 text-body-sm leading-loose flex-grow mb-6">
+                            感謝基金會這六年來發的獎助學金，對我們家的幫助很大，讓父母減輕重擔。我們做父母的都鼓勵孩子好好讀書，以後有機會、有能力，也要像得榮基金會一樣幫助別人。
+                        </p>
+                        <footer class="testimonial-card__footer">
+                            <p class="font-bold text-dark text-body">陳萍如</p>
+                            <p class="testimonial-card__role testimonial-card__role--parent">得榮少年家長分享</p>
+                        </footer>
+                    </article>
+                </div>
             </div>
         </div>
     </section>

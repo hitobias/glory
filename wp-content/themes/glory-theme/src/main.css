@@ -223,17 +223,18 @@
   @apply fixed top-0 left-0 right-0 z-50;
   width: 100%;
   border-top: none;
-  /* Default state (over hero video): green fades to transparent downward
-     so the video shows through naturally and the nav text stays readable. */
+  /* Default state (over hero video): theme color fades to transparent downward
+     so the video shows through naturally and the nav text stays readable.
+     Uses --theme-primary-rgb so theme switcher can swap palettes. */
   background: linear-gradient(to bottom,
-    rgba(25, 86, 48, 0.75) 0%,
-    rgba(25, 86, 48, 0.45) 55%,
-    rgba(25, 86, 48, 0) 100%);
+    rgba(var(--theme-primary-rgb, 25, 86, 48), 0.75) 0%,
+    rgba(var(--theme-primary-rgb, 25, 86, 48), 0.45) 55%,
+    rgba(var(--theme-primary-rgb, 25, 86, 48), 0) 100%);
   transition: background 0.4s, box-shadow 0.4s, backdrop-filter 0.4s;
 }
 
 .header-wrap.header-scrolled {
-  background: rgba(25, 86, 48, 0.85);
+  background: rgba(var(--theme-primary-rgb, 25, 86, 48), 0.85);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.12);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   backdrop-filter: saturate(180%) blur(20px);
@@ -949,7 +950,10 @@ a.drawer-contact-item:hover {
    ========================================================================== */
 
 .hero-video-section {
-  @apply relative overflow-hidden bg-gradient-to-br from-accent-green to-dark;
+  @apply relative overflow-hidden;
+  background: linear-gradient(to bottom right,
+    var(--theme-primary, #195630),
+    var(--theme-primary-deep, #082712));
 }
 
 .hero-video-wrap {
@@ -1180,6 +1184,118 @@ a.drawer-contact-item:hover {
 .vc_col-sm-3 { @apply w-full md:w-[calc(25%-0.75rem)]; }
 .vc_col-sm-12 { @apply w-full; }
 
+/* ==========================================================================
+   Testimonial card — clean quote card for student/parent sharings.
+   Uses CSS ::before for the decorative quote mark so it never collides with
+   Tailwind's absolute-positioning + alpha-color quirks.
+   ========================================================================== */
+.testimonial-card {
+  @apply relative bg-white rounded-2xl p-7 md:p-8 shadow-card flex flex-col;
+  padding-top: 3.5rem;
+}
+
+.testimonial-card::before {
+  content: "\201C";
+  position: absolute;
+  top: 0.5rem;
+  left: 1.5rem;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 5.5rem;
+  line-height: 1;
+  font-weight: 700;
+  pointer-events: none;
+  user-select: none;
+}
+
+.testimonial-card--youth::before {
+  color: rgba(var(--theme-primary-rgb, 25, 86, 48), 0.18);
+}
+
+.testimonial-card--parent::before {
+  color: rgba(40, 114, 250, 0.18);
+}
+
+.testimonial-card__footer {
+  @apply pt-5 border-t border-gray-100;
+}
+
+.testimonial-card__role {
+  @apply text-body-sm mt-1;
+}
+
+.testimonial-card__role--youth {
+  color: #195630;
+}
+
+.testimonial-card__role--parent {
+  color: #2872fa;
+}
+
+/* ==========================================================================
+   Gutenberg Gallery — clean publication/magazine cover grid.
+   Overrides default Gutenberg flex layout + GeneratePress defaults so any
+   gallery inside .prose renders as a uniform card grid with 2:3 covers.
+   ========================================================================== */
+.prose .wp-block-gallery,
+.prose .blocks-gallery-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  list-style: none;
+  margin: 2rem 0 !important;
+  padding: 0 !important;
+}
+
+@media (min-width: 640px) {
+  .prose .wp-block-gallery,
+  .prose .blocks-gallery-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .prose .wp-block-gallery,
+  .prose .blocks-gallery-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+.prose .blocks-gallery-item {
+  @apply m-0 p-0;
+  list-style: none;
+  width: 100% !important;
+}
+
+.prose .blocks-gallery-item figure {
+  @apply m-0 p-0 w-full h-full;
+}
+
+/* Publication cover card — anchor wraps the image as a proper card */
+.prose .blocks-gallery-item a,
+.prose .wp-block-image a {
+  @apply block overflow-hidden bg-gray-100 rounded-card;
+  aspect-ratio: 2 / 3;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.prose .blocks-gallery-item a:hover,
+.prose .wp-block-image a:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08), 0 14px 30px rgba(0, 0, 0, 0.08);
+}
+
+.prose .blocks-gallery-item img,
+.prose .wp-block-gallery img {
+  @apply w-full h-full m-0;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 0 !important;
+  display: block;
+}
+
 /* Elementor fallback — force light */
 .elementor-widget-container {
   @apply block;
@@ -1237,4 +1353,99 @@ a.drawer-contact-item:hover {
     opacity: 1 !important;
     transform: none !important;
   }
+}
+
+/* ==========================================================================
+   Theme Switcher — 4 color schemes via CSS variables + body class
+   Default = Green (Glory brand). Others apply via body.theme-{charcoal|wine|navy}.
+   Controls the hand-written styles (hero bg, navbar, testimonial quote) that
+   use var() + rgba() as well as Tailwind utility classes that were compiled
+   with the original accent-green palette.
+   ========================================================================== */
+
+:root,
+body.theme-green {
+  --theme-primary:       #195630;
+  --theme-primary-rgb:   25, 86, 48;
+  --theme-primary-dark:  #0c3b1e;
+  --theme-primary-deep:  #082712;
+  --theme-primary-soft:  #ecf4ef;
+  --theme-accent:        #fcc800;
+}
+
+body.theme-charcoal {
+  --theme-primary:       #222520;
+  --theme-primary-rgb:   34, 37, 32;
+  --theme-primary-dark:  #141411;
+  --theme-primary-deep:  #0a0a08;
+  --theme-primary-soft:  #ebe9e3;
+  --theme-accent:        #fcc800;
+}
+
+body.theme-wine {
+  --theme-primary:       #6b2818;
+  --theme-primary-rgb:   107, 40, 24;
+  --theme-primary-dark:  #4a1a0d;
+  --theme-primary-deep:  #2d0e06;
+  --theme-primary-soft:  #f5e8e0;
+  --theme-accent:        #fcc800;
+}
+
+body.theme-navy {
+  --theme-primary:       #1a3558;
+  --theme-primary-rgb:   26, 53, 88;
+  --theme-primary-dark:  #0a1b33;
+  --theme-primary-deep:  #051124;
+  --theme-primary-soft:  #e4ecf8;
+  --theme-accent:        #fcc800;
+}
+
+/* === Override Tailwind utility classes for non-green themes === */
+body.theme-charcoal .bg-accent-green,
+body.theme-charcoal [class*="bg-accent-green-"],
+body.theme-wine .bg-accent-green,
+body.theme-wine [class*="bg-accent-green-"],
+body.theme-navy .bg-accent-green,
+body.theme-navy [class*="bg-accent-green-"] {
+  background-color: var(--theme-primary) !important;
+}
+
+body.theme-charcoal .text-accent-green,
+body.theme-charcoal [class*="text-accent-green-"],
+body.theme-wine .text-accent-green,
+body.theme-wine [class*="text-accent-green-"],
+body.theme-navy .text-accent-green,
+body.theme-navy [class*="text-accent-green-"] {
+  color: var(--theme-primary) !important;
+}
+
+body.theme-charcoal .border-accent-green,
+body.theme-charcoal [class*="border-accent-green-"],
+body.theme-wine .border-accent-green,
+body.theme-wine [class*="border-accent-green-"],
+body.theme-navy .border-accent-green,
+body.theme-navy [class*="border-accent-green-"] {
+  border-color: var(--theme-primary) !important;
+}
+
+/* Section hero gradients — pattern `bg-gradient-to-br from-accent-green to-dark`
+   appears on most page headers. Replace with theme-aware gradient. */
+body.theme-charcoal .bg-gradient-to-br.from-accent-green,
+body.theme-wine .bg-gradient-to-br.from-accent-green,
+body.theme-navy .bg-gradient-to-br.from-accent-green {
+  background-image: linear-gradient(to bottom right,
+    var(--theme-primary),
+    var(--theme-primary-deep)) !important;
+}
+
+/* Section-header-bar uses accent-green-500 background — override to accent gold
+   so it still pops against the white page section bg (cross-theme safe) */
+body:not(.theme-green) .section-header-bar {
+  background-color: var(--theme-accent) !important;
+}
+
+/* Outlined buttons and border accents in hero/footer */
+body:not(.theme-green) .border-l-accent-green,
+body:not(.theme-green) [class*="border-accent-green"] {
+  border-color: var(--theme-primary) !important;
 }

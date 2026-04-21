@@ -223,7 +223,13 @@
   @apply fixed top-0 left-0 right-0 z-50;
   width: 100%;
   border-top: none;
-  transition: background-color 0.4s, box-shadow 0.4s, backdrop-filter 0.4s, border-top 0.4s;
+  /* Default state (over hero video): green fades to transparent downward
+     so the video shows through naturally and the nav text stays readable. */
+  background: linear-gradient(to bottom,
+    rgba(25, 86, 48, 0.75) 0%,
+    rgba(25, 86, 48, 0.45) 55%,
+    rgba(25, 86, 48, 0) 100%);
+  transition: background 0.4s, box-shadow 0.4s, backdrop-filter 0.4s;
 }
 
 .header-wrap.header-scrolled {
@@ -306,6 +312,19 @@ header.site-header {
 @media (min-width: 1024px) {
   .site-main > section:first-child {
     padding-top: 9rem !important;  /* 5rem header + 4rem visible */
+  }
+}
+
+/* Exception: the immersive hero video section spans behind the navbar,
+   so no top padding — video starts at y=0 of the viewport. */
+.site-main > section.hero-video-section:first-child,
+.site-main > section.hero-video-section:first-child {
+  padding-top: 0 !important;
+}
+
+@media (min-width: 1024px) {
+  .site-main > section.hero-video-section:first-child {
+    padding-top: 0 !important;
   }
 }
 
@@ -930,32 +949,16 @@ a.drawer-contact-item:hover {
    ========================================================================== */
 
 .hero-video-section {
-  @apply relative bg-dark overflow-hidden flex items-center;
-  min-height: 60vh;
-}
-
-@media (min-width: 768px) {
-  .hero-video-section { min-height: 70vh; }
-}
-
-@media (min-width: 1024px) {
-  .hero-video-section { min-height: 80vh; }
+  @apply relative overflow-hidden bg-gradient-to-br from-accent-green to-dark;
 }
 
 .hero-video-wrap {
-  @apply absolute inset-0 z-0 overflow-hidden pointer-events-none;
+  @apply relative w-full;
+  aspect-ratio: 16 / 9;
 }
 
 .hero-video-iframe {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  /* Always cover: whichever is larger — viewport-based or 100% of parent */
-  width: 100vw;
-  height: 56.25vw;   /* 16:9 = 100vw * 9/16 */
-  min-height: 100%;
-  min-width: 177.78vh; /* 16:9 inverse = 100vh * 16/9 */
+  @apply absolute inset-0 w-full h-full;
 }
 
 /* ==========================================================================
@@ -1142,10 +1145,13 @@ a.drawer-contact-item:hover {
   @apply inline-block my-4;
 }
 
-.qubely-block-btn-anchor {
+.qubely-block-btn-anchor,
+.prose a.qubely-block-btn-anchor,
+.prose a.qubely-block-btn-anchor:hover {
   @apply inline-flex items-center px-6 py-3 rounded-lg
          font-semibold no-underline transition-colors;
   @apply bg-primary-500 text-white hover:bg-primary-600;
+  text-decoration: none;
 }
 
 .qubely-block-image-comparison {

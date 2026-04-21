@@ -1,20 +1,20 @@
 {
   "src/editor.js": {
-    "file": "js/editor.wbLzh9T7.js",
+    "file": "js/editor.Dy-WEiZV.js",
     "name": "editor",
     "src": "src/editor.js",
     "isEntry": true,
     "css": [
-      "css/editor.BlSaneST.css"
+      "css/editor.Bp-uUMbF.css"
     ]
   },
   "src/main.js": {
-    "file": "js/main.BwhqsFo7.js",
+    "file": "js/main.CqwH7dsq.js",
     "name": "main",
     "src": "src/main.js",
     "isEntry": true,
     "css": [
-      "css/main.Cxg62cfU.css"
+      "css/main.Cm12ivF1.css"
     ]
   }
 }

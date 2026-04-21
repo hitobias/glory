@@ -13,13 +13,12 @@ get_header();
 
 <main id="main-content" class="site-main">
 
-    <!-- ========== HERO (影片背景) ========== -->
+    <!-- ========== HERO VIDEO (原生 16:9，無裁切、無遮擋，字幕完整顯示) ========== -->
     <section class="hero-video-section">
-        <!-- Video background — covers the section like object-fit:cover -->
         <div class="hero-video-wrap" aria-hidden="true">
             <iframe
                 id="hero-video"
-                src="https://www.youtube.com/embed/ZmSpUNBDQDM?autoplay=1&mute=1&loop=1&playlist=ZmSpUNBDQDM&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&disablekb=1"
+                src="https://www.youtube.com/embed/ZmSpUNBDQDM?autoplay=1&mute=1&loop=1&playlist=ZmSpUNBDQDM&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&disablekb=1&cc_load_policy=1"
                 class="hero-video-iframe"
                 frameborder="0"
                 allow="autoplay; encrypted-media"
@@ -27,31 +26,23 @@ get_header();
                 title="得榮基金會影片"
             ></iframe>
         </div>
+    </section>
 
-        <!-- Gradient overlay -->
-        <div class="absolute inset-0 z-10 bg-gradient-to-b from-dark/60 via-dark/40 to-dark/70"></div>
-
-        <!-- Content -->
-        <div class="relative z-20 container-content py-24 md:py-32 lg:py-40 text-center">
+    <!-- ========== HERO 標題區塊（緊接影片下方） ========== -->
+    <section class="bg-white pt-8 pb-16 md:pt-12 md:pb-20 lg:pt-16 lg:pb-24">
+        <div class="container-content text-center">
             <div data-animate="fade-up" class="max-w-3xl mx-auto">
-                <h1 class="text-[2rem] md:text-h1 lg:text-display text-white mb-4 md:mb-6 leading-tight drop-shadow-lg">
+                <h1 class="text-[2rem] md:text-h1 lg:text-display text-dark mb-4 md:mb-6 leading-tight">
                     得榮少年教育專案
                 </h1>
-                <p class="text-white/90 text-body md:text-body-lg mb-8 md:mb-10 max-w-xl mx-auto drop-shadow-md">
+                <p class="text-dark-500 text-body md:text-body-lg mb-8 md:mb-10 max-w-xl mx-auto">
                     透過得榮夥伴的關心陪伴，讓兒少家庭獲得各面實際的資源，協助升學
                 </p>
-                <a href="<?php echo esc_url(home_url('/glory-young-regulations/')); ?>" class="btn-accent btn-lg shadow-lg hover:shadow-xl transition-shadow">
+                <a href="<?php echo esc_url(home_url('/glory-young-regulations/')); ?>" class="btn-accent btn-lg shadow-md hover:shadow-lg transition-shadow">
                     前往招生簡章
                     <?php echo glory_get_icon('arrow-right', 'w-5 h-5'); ?>
                 </a>
             </div>
-        </div>
-
-        <!-- Decorative wave -->
-        <div class="absolute bottom-0 left-0 right-0 z-20">
-            <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
-                <path d="M0 60V20C240 0 480 40 720 30C960 20 1200 0 1440 20V60H0Z" fill="white"/>
-            </svg>
         </div>
     </section>
 
@@ -349,10 +340,10 @@ get_header();
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 text-center" data-stagger>
                 <?php
                 $stats = [
-                    ['num' => 50000, 'suffix' => '+', 'label' => '近五年學生人次'],
-                    ['num' => 500, 'suffix' => '+', 'label' => '得榮少年教育專案人數'],
-                    ['num' => 3000, 'suffix' => '+', 'label' => '近五年服務班級次數'],
-                    ['num' => 1000, 'suffix' => '+', 'label' => '志工培訓人數'],
+                    ['num' => 235725, 'suffix' => '', 'label' => '近五年學生人次'],
+                    ['num' => 4551, 'suffix' => '', 'label' => '得榮少年教育專案人數'],
+                    ['num' => 2640, 'suffix' => '', 'label' => '近五年服務班級次數'],
+                    ['num' => 5427, 'suffix' => '', 'label' => '志工培訓人數'],
                 ];
                 foreach ($stats as $stat) :
                 ?>

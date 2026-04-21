@@ -17,11 +17,11 @@ $logo_url = GLORY_THEME_URI . '/assets/images/logo.png';
 
     <!-- Main Header -->
     <header class="site-header">
-        <div class="container-content flex items-center justify-between h-14 lg:h-20">
+        <div class="container-content flex items-center justify-between h-12 lg:h-16">
 
             <!-- Logo -->
             <a href="<?php echo esc_url(home_url('/')); ?>" class="header-logo" aria-label="<?php echo esc_attr(get_bloginfo('name')); ?>">
-                <img src="<?php echo esc_url($logo_url); ?>" alt="得榮基金會" class="h-9 lg:h-[3.25rem] w-auto">
+                <img src="<?php echo esc_url($logo_url); ?>" alt="得榮基金會" class="h-8 lg:h-10 w-auto">
             </a>
 
             <!-- Desktop Navigation (hidden on mobile) -->

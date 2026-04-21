@@ -71,24 +71,24 @@ get_header();
 
             <div class="grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto" data-stagger>
                 <div class="card overflow-hidden">
-                    <div class="aspect-[4/3] bg-gray-200 flex items-center justify-center">
-                        <span class="text-dark-300 text-body-sm">萬里海邊淨灘</span>
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="<?php echo esc_url(GLORY_THEME_URI . '/assets/images/services/beach-cleanup.jpg'); ?>" alt="萬里海邊淨灘" loading="lazy" class="w-full h-full object-cover">
                     </div>
                     <div class="card-body">
                         <p class="text-body-sm text-dark-500 text-center">萬里海邊淨灘</p>
                     </div>
                 </div>
                 <div class="card overflow-hidden">
-                    <div class="aspect-[4/3] bg-gray-200 flex items-center justify-center">
-                        <span class="text-dark-300 text-body-sm">陪伴早療兒童</span>
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="<?php echo esc_url(GLORY_THEME_URI . '/assets/images/services/early-therapy.jpg'); ?>" alt="陪伴早療兒童" loading="lazy" class="w-full h-full object-cover">
                     </div>
                     <div class="card-body">
                         <p class="text-body-sm text-dark-500 text-center">陪伴早療兒童與環境清潔</p>
                     </div>
                 </div>
                 <div class="card overflow-hidden">
-                    <div class="aspect-[4/3] bg-gray-200 flex items-center justify-center">
-                        <span class="text-dark-300 text-body-sm">長照中心關懷長者</span>
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="<?php echo esc_url(GLORY_THEME_URI . '/assets/images/services/elderly-care.jpg'); ?>" alt="長照中心關懷長者" loading="lazy" class="w-full h-full object-cover">
                     </div>
                     <div class="card-body">
                         <p class="text-body-sm text-dark-500 text-center">長照中心關懷長者與環境清潔</p>

@@ -1,20 +1,20 @@
 {
   "src/editor.js": {
-    "file": "js/editor.OsiL2bLI.js",
+    "file": "js/editor.cg5DNZtO.js",
     "name": "editor",
     "src": "src/editor.js",
     "isEntry": true,
     "css": [
-      "css/editor.B5wTuKsp.css"
+      "css/editor.CUkZMJF6.css"
     ]
   },
   "src/main.js": {
-    "file": "js/main._jlex3X3.js",
+    "file": "js/main.DbCwAYaT.js",
     "name": "main",
     "src": "src/main.js",
     "isEntry": true,
     "css": [
-      "css/main.B2rAier7.css"
+      "css/main.D_jQuqqx.css"
     ]
   }
 }

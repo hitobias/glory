@@ -89,29 +89,8 @@ get_header();
                     </div>
                 </div>
 
-                <!-- Map + Transit -->
+                <!-- Transit Info -->
                 <div class="lg:col-span-3 space-y-6">
-                    <!-- Map (OpenStreetMap — no API key, embed-friendly) -->
-                    <div class="rounded-2xl overflow-hidden shadow-card relative">
-                        <iframe
-                            src="https://www.openstreetmap.org/export/embed.html?bbox=121.56150%2C25.03090%2C121.56750%2C25.03690&layer=mapnik&marker=25.03390%2C121.56450"
-                            width="100%"
-                            height="350"
-                            style="border:0;"
-                            loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"
-                            title="得榮基金會地圖"
-                        ></iframe>
-                        <a
-                            href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E5%B8%82%E4%BF%A1%E7%BE%A9%E8%B7%AF%E5%9B%9B%E6%AE%B5460%E8%99%9F3F-1"
-                            target="_blank"
-                            rel="noopener"
-                            class="absolute bottom-3 right-3 bg-white/95 backdrop-blur px-3 py-2 rounded-lg shadow text-body-sm font-medium text-dark hover:text-primary-500 no-underline"
-                        >
-                            在 Google Maps 中開啟
-                        </a>
-                    </div>
-
                     <!-- Transit Info -->
                     <div class="bg-white rounded-2xl shadow-card p-6 md:p-8">
                         <h2 class="text-h3 text-dark mb-6">交通資訊</h2>

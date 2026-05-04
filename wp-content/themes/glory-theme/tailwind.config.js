@@ -10,18 +10,19 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Brand sky-blue palette anchored at 500 (#58a9dc)
         primary: {
-          50: '#eef4ff',
-          100: '#d9e6ff',
-          200: '#bcd4ff',
-          300: '#8eb8ff',
-          400: '#5993ff',
-          500: '#2872fa',
-          600: '#1a5ce0',
-          700: '#1548b8',
-          800: '#163c94',
-          900: '#183574',
-          950: '#122247',
+          50: '#f0f8fd',
+          100: '#d9eef9',
+          200: '#b3dcf2',
+          300: '#88c8e8',
+          400: '#6cb9e0',
+          500: '#58a9dc',
+          600: '#3589c1',
+          700: '#2a6ea0',
+          800: '#235a82',
+          900: '#1d4969',
+          950: '#102d44',
         },
         accent: {
           DEFAULT: '#fcc800',
@@ -36,18 +37,22 @@ export default {
           800: '#89560a',
           900: '#74460f',
         },
+        // Historical name kept for backwards-compat with existing classes;
+        // re-anchored to the new sky-blue family. DEFAULT = primary-800
+        // so dark surfaces (hero, drawer, dropdown accent) keep ≥4.5:1
+        // contrast against white text.
         'accent-green': {
-          DEFAULT: '#195630',
-          50: '#f0fdf4',
-          100: '#dcfce7',
-          200: '#bbf7d0',
-          300: '#86efac',
-          400: '#4ade80',
-          500: '#22c55e',
-          600: '#16a34a',
-          700: '#15803d',
-          800: '#195630',
-          900: '#14532d',
+          DEFAULT: '#235a82',
+          50: '#f0f8fd',
+          100: '#d9eef9',
+          200: '#b3dcf2',
+          300: '#88c8e8',
+          400: '#6cb9e0',
+          500: '#58a9dc',
+          600: '#3589c1',
+          700: '#2a6ea0',
+          800: '#235a82',
+          900: '#1d4969',
         },
         dark: {
           DEFAULT: '#192a3d',

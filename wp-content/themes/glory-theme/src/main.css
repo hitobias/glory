@@ -68,11 +68,11 @@
            hover:shadow-md hover:-translate-y-0.5
            active:translate-y-0
            focus-visible:outline-accent-green;
-    background: linear-gradient(135deg, #195630 0%, #192a3d 100%);
+    background: linear-gradient(135deg, #235a82 0%, #192a3d 100%);
   }
 
   .btn-primary:hover {
-    background: linear-gradient(135deg, #1e6b3a 0%, #1e3550 100%);
+    background: linear-gradient(135deg, #2a6ea0 0%, #1e3550 100%);
   }
 
   .btn-accent {
@@ -90,8 +90,8 @@
   }
 
   .btn-outline:hover {
-    background: linear-gradient(135deg, #195630 0%, #192a3d 100%);
-    border-color: #195630;
+    background: linear-gradient(135deg, #235a82 0%, #192a3d 100%);
+    border-color: #235a82;
   }
 
   .btn-white {
@@ -227,14 +227,14 @@
      so the video shows through naturally and the nav text stays readable.
      Uses --theme-primary-rgb so theme switcher can swap palettes. */
   background: linear-gradient(to bottom,
-    rgba(var(--theme-primary-rgb, 25, 86, 48), 0.75) 0%,
-    rgba(var(--theme-primary-rgb, 25, 86, 48), 0.45) 55%,
-    rgba(var(--theme-primary-rgb, 25, 86, 48), 0) 100%);
+    rgba(var(--theme-primary-rgb, 35, 90, 130), 0.75) 0%,
+    rgba(var(--theme-primary-rgb, 35, 90, 130), 0.45) 55%,
+    rgba(var(--theme-primary-rgb, 35, 90, 130), 0) 100%);
   transition: background 0.4s, box-shadow 0.4s, backdrop-filter 0.4s;
 }
 
 .header-wrap.header-scrolled {
-  background: rgba(var(--theme-primary-rgb, 25, 86, 48), 0.85);
+  background: rgba(var(--theme-primary-rgb, 35, 90, 130), 0.85);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.12);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   backdrop-filter: saturate(180%) blur(20px);
@@ -402,7 +402,7 @@ header.site-header {
 }
 
 .flink:hover .flink-name {
-  color: var(--flink-color, #195630);
+  color: var(--flink-color, #235a82);
 }
 
 .flink-url {
@@ -410,7 +410,7 @@ header.site-header {
 }
 
 .flink:hover .flink-url {
-  color: var(--flink-color, #195630);
+  color: var(--flink-color, #235a82);
 }
 
 /* Footer social icons — platform brand colors */
@@ -593,7 +593,7 @@ a.generate-back-to-top {
          bg-white rounded-xl list-none m-0 py-2 px-1.5
          opacity-0 invisible;
   transform: translateX(-50%) translateY(10px);
-  border-top: 2.5px solid #195630;
+  border-top: 2.5px solid #235a82;
   box-shadow: 0 12px 40px -8px rgba(25, 42, 61, 0.14),
               0 4px 12px -4px rgba(25, 42, 61, 0.05);
   -webkit-backdrop-filter: blur(8px);
@@ -635,13 +635,13 @@ a.generate-back-to-top {
   bottom: 25%;
   width: 3px;
   border-radius: 2px;
-  background: #195630;
+  background: #235a82;
   transform: scaleY(0);
   transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .glory-nav .sub-menu li a:hover {
-  color: #195630;
+  color: #235a82;
   @apply bg-accent-green-100/50;
   padding-left: 1.125rem;
 }
@@ -652,7 +652,7 @@ a.generate-back-to-top {
 
 /* Active sub-item accent */
 .glory-nav .sub-menu li.current-menu-item > a {
-  color: #195630;
+  color: #235a82;
   @apply bg-accent-green-100/60 font-medium;
   padding-left: 1.125rem;
 }
@@ -782,7 +782,7 @@ a.generate-back-to-top {
          overflow-hidden;
   z-index: 70;
   width: 100%;
-  background: rgba(25, 86, 48, 0.97);
+  background: rgba(35, 90, 130, 0.97);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   backdrop-filter: saturate(180%) blur(20px);
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
@@ -952,8 +952,8 @@ a.drawer-contact-item:hover {
 .hero-video-section {
   @apply relative overflow-hidden;
   background: linear-gradient(to bottom right,
-    var(--theme-primary, #195630),
-    var(--theme-primary-deep, #082712));
+    var(--theme-primary, #235a82),
+    var(--theme-primary-deep, #102d44));
 }
 
 .hero-video-wrap {
@@ -1208,11 +1208,11 @@ a.drawer-contact-item:hover {
 }
 
 .testimonial-card--youth::before {
-  color: rgba(var(--theme-primary-rgb, 25, 86, 48), 0.18);
+  color: rgba(var(--theme-primary-rgb, 35, 90, 130), 0.18);
 }
 
 .testimonial-card--parent::before {
-  color: rgba(40, 114, 250, 0.18);
+  color: rgba(42, 110, 160, 0.20);
 }
 
 .testimonial-card__footer {
@@ -1224,11 +1224,11 @@ a.drawer-contact-item:hover {
 }
 
 .testimonial-card__role--youth {
-  color: #195630;
+  color: #235a82;
 }
 
 .testimonial-card__role--parent {
-  color: #2872fa;
+  color: #2a6ea0;
 }
 
 /* ==========================================================================
@@ -1365,12 +1365,13 @@ a.drawer-contact-item:hover {
 
 :root,
 body.theme-green {
-  --theme-primary:       #195630;
-  --theme-primary-rgb:   25, 86, 48;
-  --theme-primary-dark:  #0c3b1e;
-  --theme-primary-deep:  #082712;
-  --theme-primary-soft:  #ecf4ef;
+  --theme-primary:       #235a82;
+  --theme-primary-rgb:   35, 90, 130;
+  --theme-primary-dark:  #1d4969;
+  --theme-primary-deep:  #102d44;
+  --theme-primary-soft:  #f0f8fd;
   --theme-accent:        #fcc800;
+  --theme-brand:         #58a9dc;
 }
 
 body.theme-charcoal {

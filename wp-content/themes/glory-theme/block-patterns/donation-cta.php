@@ -9,8 +9,8 @@ return [
     'categories'  => ['featured'],
     'keywords'    => ['donation', 'cta', '捐款'],
     'content'     => '
-<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"5rem","bottom":"5rem"}},"color":{"gradient":"linear-gradient(135deg,#2872fa 0%,#195630 100%)"}},"layout":{"type":"constrained","contentSize":"900px"}} -->
-<div class="wp-block-group alignfull has-background" style="background:linear-gradient(135deg,#2872fa 0%,#195630 100%);padding-top:5rem;padding-bottom:5rem">
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"5rem","bottom":"5rem"}},"color":{"gradient":"linear-gradient(135deg,#58a9dc 0%,#235a82 100%)"}},"layout":{"type":"constrained","contentSize":"900px"}} -->
+<div class="wp-block-group alignfull has-background" style="background:linear-gradient(135deg,#58a9dc 0%,#235a82 100%);padding-top:5rem;padding-bottom:5rem">
     <!-- wp:heading {"textAlign":"center","style":{"typography":{"fontSize":"2.25rem"}},"textColor":"white"} -->
     <h2 class="wp-block-heading has-text-align-center has-white-color has-text-color" style="font-size:2.25rem">您的愛心，是孩子最好的禮物</h2>
     <!-- /wp:heading -->

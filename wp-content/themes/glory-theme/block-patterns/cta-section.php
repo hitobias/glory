@@ -9,8 +9,8 @@ return [
     'categories'  => ['featured'],
     'keywords'    => ['cta', 'call to action', '行動', '呼籲'],
     'content'     => '
-<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"5rem","bottom":"5rem"}},"color":{"background":"#2872fa"}},"layout":{"type":"constrained","contentSize":"800px"}} -->
-<div class="wp-block-group alignfull" style="background-color:#2872fa;padding-top:5rem;padding-bottom:5rem">
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"5rem","bottom":"5rem"}},"color":{"background":"#235a82"}},"layout":{"type":"constrained","contentSize":"800px"}} -->
+<div class="wp-block-group alignfull" style="background-color:#235a82;padding-top:5rem;padding-bottom:5rem">
     <!-- wp:heading {"textAlign":"center","style":{"typography":{"fontSize":"2rem"}},"textColor":"white"} -->
     <h2 class="wp-block-heading has-text-align-center has-white-color has-text-color" style="font-size:2rem">一起為下一代的未來努力</h2>
     <!-- /wp:heading -->

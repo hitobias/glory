@@ -3,7 +3,9 @@
  * Template Part: Theme Switcher (Preview Only)
  *
  * Floating widget for live-previewing alternate color themes.
- * Saves user's choice to localStorage. Default = green (Glory brand).
+ * Saves user's choice to localStorage. Default = sky-blue (#58a9dc, Glory brand).
+ * The "green" theme key is kept for localStorage backwards compatibility but
+ * now resolves to the sky-blue palette defined in src/main.css.
  *
  * TO REMOVE: delete the get_template_part('template-parts/theme-switcher')
  * call from footer.php, or delete this file.
@@ -33,13 +35,13 @@ defined('ABSPATH') || exit;
         <div class="gl-ts__options">
             <button class="gl-ts__option" data-theme="green">
                 <span class="gl-ts__swatch">
-                    <span style="background:#195630"></span>
+                    <span style="background:#58a9dc"></span>
+                    <span style="background:#235a82"></span>
                     <span style="background:#fcc800"></span>
-                    <span style="background:#f4eee0"></span>
                 </span>
                 <span class="gl-ts__label">
-                    <strong>深綠 · 現行</strong>
-                    <em>品牌傳統色</em>
+                    <strong>天藍 · 現行</strong>
+                    <em>得榮品牌主色 #58a9dc</em>
                 </span>
             </button>
 
@@ -117,7 +119,7 @@ defined('ABSPATH') || exit;
                 0 3px 8px rgba(0, 0, 0, 0.06);
 }
 .gl-ts__toggle svg {
-    color: var(--theme-primary, #195630);
+    color: var(--theme-primary, #235a82);
     flex-shrink: 0;
     transition: transform 0.3s;
 }
@@ -194,7 +196,7 @@ defined('ABSPATH') || exit;
 .gl-ts__option.is-active::after {
     content: "✓";
     margin-left: auto;
-    color: var(--theme-primary, #195630);
+    color: var(--theme-primary, #235a82);
     font-weight: 700;
     font-size: 14px;
 }
@@ -261,7 +263,7 @@ defined('ABSPATH') || exit;
 (function() {
     var STORAGE_KEY = 'glory.theme';
     var VALID = ['green', 'charcoal', 'wine', 'navy'];
-    var LABELS = { green: '深綠', charcoal: '墨黑', wine: '酒紅', navy: '深藍' };
+    var LABELS = { green: '天藍', charcoal: '墨黑', wine: '酒紅', navy: '深藍' };
 
     function getTheme() {
         try {

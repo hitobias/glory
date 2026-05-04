@@ -4,18 +4,18 @@
   "settings": {
     "color": {
       "palette": [
-        { "slug": "primary-500", "color": "#2872fa", "name": "Primary" },
-        { "slug": "primary-600", "color": "#1a5ce0", "name": "Primary Dark" },
-        { "slug": "primary-100", "color": "#d9e6ff", "name": "Primary Light" },
-        { "slug": "primary-50", "color": "#eef4ff", "name": "Primary Lightest" },
+        { "slug": "primary-500", "color": "#58a9dc", "name": "Primary" },
+        { "slug": "primary-600", "color": "#3589c1", "name": "Primary Dark" },
+        { "slug": "primary-100", "color": "#d9eef9", "name": "Primary Light" },
+        { "slug": "primary-50", "color": "#f0f8fd", "name": "Primary Lightest" },
         { "slug": "accent", "color": "#fcc800", "name": "Accent Yellow" },
         { "slug": "accent-50", "color": "#fffce5", "name": "Accent Lightest" },
         { "slug": "accent-100", "color": "#fff8c2", "name": "Accent Light" },
         { "slug": "accent-400", "color": "#fcd419", "name": "Accent Hover" },
         { "slug": "accent-800", "color": "#89560a", "name": "Accent Dark" },
-        { "slug": "accent-green", "color": "#195630", "name": "Accent Green" },
-        { "slug": "accent-green-100", "color": "#dcfce7", "name": "Accent Green Light" },
-        { "slug": "accent-green-800", "color": "#195630", "name": "Accent Green Dark" },
+        { "slug": "accent-green", "color": "#235a82", "name": "Brand Deep" },
+        { "slug": "accent-green-100", "color": "#d9eef9", "name": "Brand Light" },
+        { "slug": "accent-green-800", "color": "#235a82", "name": "Brand Deep" },
         { "slug": "dark", "color": "#192a3d", "name": "Dark" },
         { "slug": "dark-300", "color": "#95b8d7", "name": "Dark 300" },
         { "slug": "dark-400", "color": "#6394c2", "name": "Dark 400" },
@@ -65,11 +65,11 @@
     "elements": {
       "link": {
         "color": {
-          "text": "#2872fa"
+          "text": "#58a9dc"
         },
         ":hover": {
           "color": {
-            "text": "#1548b8"
+            "text": "#235a82"
           }
         }
       },
@@ -118,7 +118,7 @@
       "core/quote": {
         "border": {
           "left": {
-            "color": "#2872fa",
+            "color": "#58a9dc",
             "width": "4px",
             "style": "solid"
           }
